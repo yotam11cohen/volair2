@@ -115,6 +115,7 @@ p  { line-height: 1.7; color: var(--color-muted); }
 }
 
 .nav-logo svg { flex-shrink: 0; }
+.nav-logo img { width: 36px; height: 36px; object-fit: contain; flex-shrink: 0; mix-blend-mode: screen; }
 
 .nav-logo span span { color: var(--color-primary); }
 
