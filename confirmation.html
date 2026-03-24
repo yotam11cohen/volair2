@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ההזמנה אושרה! — VolAir Airlines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    @keyframes confetti-fall {
+      0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    }
+    .confetti-piece {
+      position: fixed;
+      width: 10px; height: 10px;
+      top: -20px;
+      animation: confetti-fall linear forwards;
+      pointer-events: none;
+      z-index: 9998;
+      border-radius: 2px;
+    }
+    @media (prefers-reduced-motion: reduce) { .confetti-piece { display: none; } }
+  </style>
+</head>
+<body class="confirmation-page">
+
+  <nav class="navbar" role="navigation" aria-label="ניווט ראשי">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <circle cx="16" cy="16" r="16" fill="#00B5C8" opacity="0.15"/>
+          <path d="M6 16 L26 10 L22 16 L26 22 Z" fill="#00B5C8"/>
+          <path d="M14 16 L10 20 L12 16 L10 12 Z" fill="#7ED321"/>
+        </svg>
+        <span>Vol<span>Air</span></span>
+      </a>
+      <button class="nav-toggle" aria-label="פתח/סגור תפריט" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">בית</a></li>
+        <li><a href="flights.html" class="btn-nav">הזמן טיסה</a></li>
+        <li><a href="crew.html">הצוות שלנו</a></li>
+        <li><a href="fleet.html">הצי שלנו</a></li>
+        <li><a href="about.html">אודות</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="progress-steps" role="list" aria-label="שלבי הזמנה">
+    <div class="step done" role="listitem"><div class="step-dot">✓</div><div class="step-label">חיפוש</div></div>
+    <div class="step done" role="listitem"><div class="step-dot">✓</div><div class="step-label">תוצאות</div></div>
+    <div class="step done" role="listitem"><div class="step-dot">✓</div><div class="step-label">מושבים</div></div>
+    <div class="step done" role="listitem"><div class="step-dot">✓</div><div class="step-label">סיכום</div></div>
+    <div class="step done" role="listitem"><div class="step-dot">✓</div><div class="step-label">תשלום</div></div>
+    <div class="step active" role="listitem"><div class="step-dot">✓</div><div class="step-label">הושלם!</div></div>
+  </div>
+
+  <main>
+    <div class="container section" style="max-width:700px;margin:0 auto;">
+
+      <!-- כותרת הצלחה -->
+      <div class="confirmation-hero" aria-live="polite">
+        <div class="confirm-icon" aria-hidden="true">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+        <h1 style="color:var(--color-body);">ההזמנה אושרה!</h1>
+        <p style="font-size:1.1rem;color:var(--color-muted);">הטיסה שלך הוזמנה בהצלחה. נסיעה טובה!</p>
+        <div class="booking-ref" aria-label="מספר הזמנה" id="conf-ref">—</div>
+        <p style="font-size:0.85rem;color:var(--color-muted);">מספר הזמנה — שמור אותו לצ'ק-אין</p>
+      </div>
+
+      <!-- פרטי הזמנה -->
+      <div class="card">
+        <h3 style="margin-bottom:20px;">פרטי ההזמנה שלך</h3>
+
+        <div class="booking-details-grid">
+          <div class="detail-item">
+            <div class="label">מספר טיסה</div>
+            <div class="value" id="conf-flight">—</div>
+          </div>
+          <div class="detail-item">
+            <div class="label">מסלול</div>
+            <div class="value">TLV ← BCN</div>
+          </div>
+          <div class="detail-item">
+            <div class="label">תאריך יציאה</div>
+            <div class="value" id="conf-date">—</div>
+          </div>
+          <div class="detail-item">
+            <div class="label">נוסעים</div>
+            <div class="value" id="conf-passengers">—</div>
+          </div>
+          <div class="detail-item">
+            <div class="label">מושבים שנבחרו</div>
+            <div class="value" id="conf-seats">—</div>
+          </div>
+          <div class="detail-item">
+            <div class="label">שירותים נוספים</div>
+            <div class="value" id="conf-extras">ללא</div>
+          </div>
+          <div class="detail-item">
+            <div class="label">דוא"ל אישור</div>
+            <div class="value" id="conf-email">—</div>
+          </div>
+          <div class="detail-item" style="background:rgba(0,181,200,0.07);border:1px solid rgba(0,181,200,0.2);">
+            <div class="label">סה"כ שולם</div>
+            <div class="value" id="conf-total" style="color:var(--color-primary);font-size:1.3rem;">—</div>
+          </div>
+        </div>
+
+        <!-- תזכורות -->
+        <div style="background:rgba(251,140,0,0.08);border:1px solid rgba(251,140,0,0.25);border-radius:12px;padding:16px 20px;margin:20px 0;">
+          <h4 style="color:var(--color-warning);margin-bottom:8px;">תזכורות חשובות</h4>
+          <ul style="list-style:disc;padding-right:20px;padding-left:0;display:flex;flex-direction:column;gap:6px;font-size:0.875rem;color:var(--color-muted);">
+            <li>צ'ק-אין מקוון נפתח 24 שעות לפני הטיסה</li>
+            <li>הגע לשדה התעופה לפחות שעתיים לפני הטיסה</li>
+            <li>יש להציג דרכון בתוקף או תעודת זהות</li>
+            <li>הכרטיס האלקטרוני ישלח לדוא"ל תוך 10 דקות</li>
+          </ul>
+        </div>
+
+        <!-- כפתורי פעולה -->
+        <div class="btn-group">
+          <button id="print-btn" class="btn btn-outline btn-print" type="button">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+              <rect x="6" y="14" width="12" height="8"/>
+            </svg>
+            הדפס כרטיס
+          </button>
+          <button id="save-btn" class="btn btn-outline" type="button">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            שמור כטקסט
+          </button>
+          <button id="new-booking-btn" class="btn btn-primary" type="button">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+              <path d="M3 3v5h5"/>
+            </svg>
+            הזמן טיסה נוספת
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <div class="logo-text">Vol<span>Air</span> Airlines</div>
+          <p>תודה שבחרת ב-VolAir Airlines. אנחנו מצפים לטוס איתך שוב!</p>
+        </div>
+        <div class="footer-col">
+          <h5>צריך עזרה?</h5>
+          <ul>
+            <li><a href="#">ניהול הזמנה</a></li>
+            <li><a href="#">מרכז עזרה</a></li>
+            <li><a href="#">צור קשר</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2025 VolAir Airlines. כל הזכויות שמורות.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function launchConfetti() {
+      const colors = ['#00B5C8','#7ED321','#4A9FE8','#FFD600','#FF6B6B'];
+      for (let i = 0; i < 60; i++) {
+        const p = document.createElement('div');
+        p.className = 'confetti-piece';
+        p.style.cssText = `
+          left: ${Math.random()*100}vw;
+          background: ${colors[Math.floor(Math.random()*colors.length)]};
+          width: ${6 + Math.random()*8}px;
+          height: ${6 + Math.random()*8}px;
+          animation-duration: ${2 + Math.random()*2}s;
+          animation-delay: ${Math.random()*1.5}s;
+          border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+        `;
+        document.body.appendChild(p);
+        p.addEventListener('animationend', () => p.remove());
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      launchConfetti();
+      try {
+        const s = JSON.parse(sessionStorage.getItem('volair_state') || '{}');
+        const dateEl = document.getElementById('conf-date');
+        if (dateEl && s.departure) {
+          dateEl.textContent = new Date(s.departure).toLocaleDateString('he-IL', {day:'numeric',month:'long',year:'numeric'});
+        }
+        const hebrewExtras = { luggage: 'מזוודה', priority: 'עלייה מועדפת', drinks: 'משקאות' };
+        const extrasEl = document.getElementById('conf-extras');
+        if (extrasEl && s.extras) {
+          const active = Object.entries(s.extras).filter(([,v])=>v).map(([k])=>hebrewExtras[k]||k);
+          extrasEl.textContent = active.length ? active.join(', ') : 'ללא';
+        }
+      } catch(e) {}
+    });
+  </script>
+  <script src="js/app.js"></script>
+</body>
+</html>

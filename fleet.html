@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>הצי שלנו — VolAir Airlines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <nav class="navbar" role="navigation" aria-label="ניווט ראשי">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <circle cx="16" cy="16" r="16" fill="#00B5C8" opacity="0.15"/>
+          <path d="M6 16 L26 10 L22 16 L26 22 Z" fill="#00B5C8"/>
+          <path d="M14 16 L10 20 L12 16 L10 12 Z" fill="#7ED321"/>
+        </svg>
+        <span>Vol<span>Air</span></span>
+      </a>
+      <button class="nav-toggle" aria-label="פתח/סגור תפריט" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">בית</a></li>
+        <li><a href="flights.html" class="btn-nav">הזמן טיסה</a></li>
+        <li><a href="crew.html">הצוות שלנו</a></li>
+        <li><a href="fleet.html" class="active">הצי שלנו</a></li>
+        <li><a href="about.html">אודות</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="page-hero">
+    <div class="container">
+      <h1>הצי שלנו</h1>
+      <p>מטוסי Airbus מודרניים שנבנו ליעילות, נוחות ובטיחות</p>
+    </div>
+  </div>
+
+  <main>
+    <div class="container section">
+
+      <!-- הקדמה -->
+      <div style="max-width:720px;margin:0 auto 48px;text-align:center;">
+        <h2 style="margin-bottom:16px;">צי מודרני וידידותי לסביבה</h2>
+        <p style="font-size:1.05rem;line-height:1.8;">
+          VolAir Airlines מפעילה צי Airbus בלעדי — אחד החדשים וחסכוני הדלק ביותר באזור.
+          המטוסים שלנו מצוידים באוויוניקה העדכנית ביותר, מושבים נוחים וטכנולוגיית קבינה מתקדמת,
+          המבטיחים שכל טיסה תהיה חלקה, בטוחה ומהנה.
+        </p>
+      </div>
+
+      <!-- תמונות מטוסים -->
+      <div class="fleet-hero-images">
+
+        <!-- A321 -->
+        <div class="fleet-img-card">
+          <img src="images/fleet-a321.jpg"
+               alt="מטוס Airbus A321 של VolAir Airlines בטיסה עם צבעי הלוגו"
+               loading="lazy"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <div class="fleet-img-placeholder"
+               style="display:none;background:linear-gradient(145deg,#0A1628,#0D3D6B,#00B5C8);"
+               role="img"
+               aria-label="Airbus A321 — תמונת placeholder">
+            <svg viewBox="0 0 400 200" fill="none" width="80%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <g transform="translate(20,60)">
+                <path d="M0 50 L320 30 L360 50 L320 70 Z" fill="#00B5C8" opacity="0.85"/>
+                <path d="M130 30 L220 5 L240 30 Z" fill="#4A9FE8" opacity="0.75"/>
+                <path d="M130 70 L200 90 L220 70 Z" fill="#4A9FE8" opacity="0.65"/>
+                <path d="M320 50 L370 42 L374 50 L370 58 Z" fill="#7ED321" opacity="0.9"/>
+                <rect x="50" y="42" width="12" height="10" rx="4" fill="white" opacity="0.55"/>
+                <rect x="70" y="42" width="12" height="10" rx="4" fill="white" opacity="0.55"/>
+                <rect x="90" y="42" width="12" height="10" rx="4" fill="white" opacity="0.55"/>
+                <text x="80" y="35" font-family="Inter,sans-serif" font-size="14" font-weight="800" fill="#00B5C8" opacity="0.95">VolAir A321</text>
+              </g>
+            </svg>
+            <span>Airbus A321</span>
+          </div>
+          <div class="caption">Airbus A321 <span>· מטוס גוף צר לטווח ארוך</span></div>
+        </div>
+
+        <!-- A320neo -->
+        <div class="fleet-img-card">
+          <img src="images/fleet-a320neo.jpg"
+               alt="מטוס Airbus A320neo של VolAir Airlines על מסלול המראה"
+               loading="lazy"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <div class="fleet-img-placeholder"
+               style="display:none;background:linear-gradient(145deg,#0D3D6B,#7ED321,#00B5C8);"
+               role="img"
+               aria-label="Airbus A320neo — תמונת placeholder">
+            <svg viewBox="0 0 400 200" fill="none" width="80%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <g transform="translate(20,60)">
+                <path d="M0 50 L290 30 L330 50 L290 70 Z" fill="#7ED321" opacity="0.8"/>
+                <path d="M120 30 L200 8 L220 30 Z" fill="#00B5C8" opacity="0.75"/>
+                <path d="M120 70 L190 90 L210 70 Z" fill="#00B5C8" opacity="0.65"/>
+                <path d="M290 50 L340 42 L344 50 L340 58 Z" fill="#4A9FE8" opacity="0.9"/>
+                <rect x="50" y="42" width="11" height="10" rx="4" fill="white" opacity="0.55"/>
+                <rect x="68" y="42" width="11" height="10" rx="4" fill="white" opacity="0.55"/>
+                <text x="80" y="35" font-family="Inter,sans-serif" font-size="14" font-weight="800" fill="#7ED321" opacity="0.95">VolAir A320neo</text>
+              </g>
+            </svg>
+            <span>Airbus A320neo</span>
+          </div>
+          <div class="caption">Airbus A320neo <span>· מנועים חדשים (NEO)</span></div>
+        </div>
+
+      </div>
+
+      <!-- פרטי המטוסים -->
+      <div style="display:flex;flex-direction:column;gap:40px;margin-top:48px;">
+
+        <!-- A321 -->
+        <div class="card">
+          <div style="display:flex;align-items:center;gap:16px;margin-bottom:24px;flex-wrap:wrap;">
+            <div>
+              <h3 style="margin-bottom:4px;">Airbus A321</h3>
+              <span class="badge badge-primary">דגל החברה</span>
+            </div>
+          </div>
+          <p style="margin-bottom:24px;line-height:1.8;">
+            ה-A321 הוא עמוד השדרה של פעולות האירופה ארוכות הטווח שלנו. עם עד 220 נוסעים בתצורת
+            2 מחלקות שלנו, ה-A321 מציע שילוב בלתי מוקד של טווח, יעילות ונוחות לנוסע.
+            עם 14% פחות צריכת דלק למושב לעומת דגמו הקודם, הוא פרד הבית הירוק שלנו.
+          </p>
+          <div class="fleet-spec-grid">
+            <div class="spec-box"><div class="num">220</div><div class="unit">נוסעים</div><div class="name">קיבולת</div></div>
+            <div class="spec-box"><div class="num">7,400</div><div class="unit">ק"מ</div><div class="name">טווח</div></div>
+            <div class="spec-box"><div class="num">920</div><div class="unit">קמ"ש</div><div class="name">מהירות שיוט</div></div>
+            <div class="spec-box"><div class="num">12</div><div class="unit">בצי</div><div class="name">מטוסים</div></div>
+          </div>
+        </div>
+
+        <!-- A320neo -->
+        <div class="card">
+          <div style="display:flex;align-items:center;gap:16px;margin-bottom:24px;flex-wrap:wrap;">
+            <div>
+              <h3 style="margin-bottom:4px;">Airbus A320neo</h3>
+              <span class="badge badge-success">בחירה ירוקה</span>
+            </div>
+          </div>
+          <p style="margin-bottom:24px;line-height:1.8;">
+            ה-A320neo (אפשרות מנוע חדש) מייצג את עתיד הטיסה לטווח קצר-בינוני.
+            מצויד במנועי CFM LEAP מהדור הבא והתקני קצות כנף Sharklet, הוא משיג
+            20% הפחתה בצריכת דלק בהשוואה למטוסי הדור הקודם — צעד גדול בדרך שלנו
+            לתעופה בת-קיימא. מושלם למסלולים עד 5,000 ק"מ.
+          </p>
+          <div class="fleet-spec-grid">
+            <div class="spec-box"><div class="num">180</div><div class="unit">נוסעים</div><div class="name">קיבולת</div></div>
+            <div class="spec-box"><div class="num">6,300</div><div class="unit">ק"מ</div><div class="name">טווח</div></div>
+            <div class="spec-box"><div class="num">900</div><div class="unit">קמ"ש</div><div class="name">מהירות שיוט</div></div>
+            <div class="spec-box"><div class="num">8</div><div class="unit">בצי</div><div class="name">מטוסים</div></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- סקירה כללית -->
+      <div class="card" style="margin-top:40px;text-align:center;">
+        <h3 style="margin-bottom:24px;">הצי במבט-על</h3>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
+          <div><div style="font-size:2rem;font-weight:800;color:var(--color-primary);">20</div><div style="font-size:0.85rem;color:var(--color-muted);margin-top:4px;">סה"כ מטוסים</div></div>
+          <div><div style="font-size:2rem;font-weight:800;color:var(--color-secondary);">2024</div><div style="font-size:0.85rem;color:var(--color-muted);margin-top:4px;">שנת ייצור ממוצעת</div></div>
+          <div><div style="font-size:2rem;font-weight:800;color:var(--color-accent);">20%</div><div style="font-size:0.85rem;color:var(--color-muted);margin-top:4px;">פחות פליטות</div></div>
+          <div><div style="font-size:2rem;font-weight:800;color:var(--color-primary);">A+</div><div style="font-size:0.85rem;color:var(--color-muted);margin-top:4px;">דירוג בטיחות</div></div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <div class="logo-text">Vol<span>Air</span> Airlines</div>
+          <p>מטיסים אותך רחוק יותר עם צי מודרני, יעיל ובטוח.</p>
+        </div>
+        <div class="footer-col">
+          <h5>הזמנה</h5>
+          <ul><li><a href="flights.html">חיפוש טיסות</a></li></ul>
+        </div>
+        <div class="footer-col">
+          <h5>החברה</h5>
+          <ul>
+            <li><a href="about.html">אודות</a></li>
+            <li><a href="crew.html">הצוות שלנו</a></li>
+            <li><a href="fleet.html">הצי שלנו</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>תמיכה</h5>
+          <ul>
+            <li><a href="#">מרכז עזרה</a></li>
+            <li><a href="#">צור קשר</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2025 VolAir Airlines. כל הזכויות שמורות.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

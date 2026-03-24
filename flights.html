@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>הזמן טיסה — VolAir Airlines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="flights-page">
+
+  <!-- ── ניווט ── -->
+  <nav class="navbar" role="navigation" aria-label="ניווט ראשי">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <circle cx="16" cy="16" r="16" fill="#00B5C8" opacity="0.15"/>
+          <path d="M6 16 L26 10 L22 16 L26 22 Z" fill="#00B5C8"/>
+          <path d="M14 16 L10 20 L12 16 L10 12 Z" fill="#7ED321"/>
+        </svg>
+        <span>Vol<span>Air</span></span>
+      </a>
+      <button class="nav-toggle" aria-label="פתח/סגור תפריט" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">בית</a></li>
+        <li><a href="flights.html" class="active btn-nav">הזמן טיסה</a></li>
+        <li><a href="crew.html">הצוות שלנו</a></li>
+        <li><a href="fleet.html">הצי שלנו</a></li>
+        <li><a href="about.html">אודות</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ── שלבי הזמנה ── -->
+  <div class="progress-steps" role="list" aria-label="שלבי הזמנה">
+    <div class="step active" role="listitem"><div class="step-dot">1</div><div class="step-label">חיפוש</div></div>
+    <div class="step"        role="listitem"><div class="step-dot">2</div><div class="step-label">תוצאות</div></div>
+    <div class="step"        role="listitem"><div class="step-dot">3</div><div class="step-label">מושבים</div></div>
+    <div class="step"        role="listitem"><div class="step-dot">4</div><div class="step-label">סיכום</div></div>
+    <div class="step"        role="listitem"><div class="step-dot">5</div><div class="step-label">תשלום</div></div>
+    <div class="step"        role="listitem"><div class="step-dot">6</div><div class="step-label">אישור</div></div>
+  </div>
+
+  <!-- ── כותרת עמוד ── -->
+  <div class="page-hero">
+    <div class="container">
+      <h1>חיפוש טיסות</h1>
+      <p>מצא את הטיסה הטובה ביותר למסע שלך</p>
+    </div>
+  </div>
+
+  <main>
+    <div class="container section">
+      <div class="card search-card" style="max-width:760px;margin:0 auto;">
+
+        <!-- סוג הטיסה -->
+        <div class="trip-type-row">
+          <div class="toggle-group" role="group" aria-label="סוג נסיעה">
+            <button class="toggle-btn active" data-type="one-way" aria-pressed="true">כיוון אחד</button>
+            <button class="toggle-btn" data-type="round-trip" aria-pressed="false">הלוך ושוב</button>
+          </div>
+          <span class="badge badge-primary" style="font-size:0.8rem;">תל אביב ← אירופה</span>
+        </div>
+
+        <!-- נתיב -->
+        <div class="form-grid-2" style="margin-bottom:16px;">
+          <div class="form-group">
+            <label class="form-label" for="from-city">מ <span class="required">*</span></label>
+            <input id="from-city" class="form-control" type="text" value="תל אביב (TLV)" readonly aria-readonly="true" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="to-city">אל <span class="required">*</span></label>
+            <select id="to-city" class="form-control" aria-label="עיר יעד">
+              <option value="BCN">ברצלונה (BCN)</option>
+              <option value="LIS">ליסבון (LIS)</option>
+              <option value="FCO">רומא (FCO)</option>
+              <option value="PRG">פראג (PRG)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- תאריכים -->
+        <div class="form-grid-2" style="margin-bottom:8px;">
+          <div class="form-group">
+            <label class="form-label" for="departure-date">תאריך יציאה <span class="required">*</span></label>
+            <input id="departure-date" class="form-control" type="date" aria-required="true" />
+            <span class="form-error" id="date-error"></span>
+          </div>
+          <div class="form-group return-row" id="return-row">
+            <label class="form-label" for="return-date">תאריך חזרה <span class="required">*</span></label>
+            <input id="return-date" class="form-control" type="date" aria-required="true" />
+          </div>
+        </div>
+
+        <hr class="divider" />
+
+        <!-- נוסעים -->
+        <div class="passengers-section">
+          <h4>נוסעים</h4>
+
+          <div class="passenger-row">
+            <div>
+              <div class="passenger-label">מבוגרים</div>
+              <div class="passenger-sub">גיל 18 ומעלה</div>
+            </div>
+            <div class="counter-group">
+              <button class="counter-btn" data-target="adults" data-action="dec" aria-label="הסר מבוגר">−</button>
+              <div class="counter-val" data-val="adults" data-min="1" data-max="9">1</div>
+              <button class="counter-btn" data-target="adults" data-action="inc" aria-label="הוסף מבוגר">+</button>
+            </div>
+          </div>
+
+          <div class="passenger-row">
+            <div>
+              <div class="passenger-label">נוער</div>
+              <div class="passenger-sub">גיל 12 – 17</div>
+            </div>
+            <div class="counter-group">
+              <button class="counter-btn" data-target="teens" data-action="dec" aria-label="הסר נער">−</button>
+              <div class="counter-val" data-val="teens" data-min="0" data-max="9">0</div>
+              <button class="counter-btn" data-target="teens" data-action="inc" aria-label="הוסף נער">+</button>
+            </div>
+          </div>
+
+          <div class="passenger-row">
+            <div>
+              <div class="passenger-label">ילדים</div>
+              <div class="passenger-sub">גיל 2 – 11</div>
+            </div>
+            <div class="counter-group">
+              <button class="counter-btn" data-target="children" data-action="dec" aria-label="הסר ילד">−</button>
+              <div class="counter-val" data-val="children" data-min="0" data-max="9">0</div>
+              <button class="counter-btn" data-target="children" data-action="inc" aria-label="הוסף ילד">+</button>
+            </div>
+          </div>
+        </div>
+
+        <hr class="divider" />
+
+        <button id="search-btn" class="btn btn-primary btn-lg btn-full" type="button">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+          </svg>
+          חפש טיסות
+        </button>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-bottom">
+        <span>&copy; 2025 VolAir Airlines</span>
+        <a href="index.html" style="color:rgba(255,255,255,0.45);">→ חזרה לדף הבית</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

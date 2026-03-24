@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>טיסות זמינות — VolAir Airlines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="results-page">
+
+  <nav class="navbar" role="navigation" aria-label="ניווט ראשי">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <circle cx="16" cy="16" r="16" fill="#00B5C8" opacity="0.15"/>
+          <path d="M6 16 L26 10 L22 16 L26 22 Z" fill="#00B5C8"/>
+          <path d="M14 16 L10 20 L12 16 L10 12 Z" fill="#7ED321"/>
+        </svg>
+        <span>Vol<span>Air</span></span>
+      </a>
+      <button class="nav-toggle" aria-label="פתח/סגור תפריט" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">בית</a></li>
+        <li><a href="flights.html" class="btn-nav">הזמן טיסה</a></li>
+        <li><a href="crew.html">הצוות שלנו</a></li>
+        <li><a href="fleet.html">הצי שלנו</a></li>
+        <li><a href="about.html">אודות</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="progress-steps" role="list" aria-label="שלבי הזמנה">
+    <div class="step done"   role="listitem"><div class="step-dot">✓</div><div class="step-label">חיפוש</div></div>
+    <div class="step active" role="listitem"><div class="step-dot">2</div><div class="step-label">תוצאות</div></div>
+    <div class="step"        role="listitem"><div class="step-dot">3</div><div class="step-label">מושבים</div></div>
+    <div class="step"        role="listitem"><div class="step-dot">4</div><div class="step-label">סיכום</div></div>
+    <div class="step"        role="listitem"><div class="step-dot">5</div><div class="step-label">תשלום</div></div>
+    <div class="step"        role="listitem"><div class="step-dot">6</div><div class="step-label">אישור</div></div>
+  </div>
+
+  <div class="page-hero">
+    <div class="container">
+      <h1>טיסות זמינות</h1>
+      <p>תל אביב (TLV) ← ברצלונה (BCN) &nbsp;·&nbsp; נמצאו 3 טיסות</p>
+    </div>
+  </div>
+
+  <main>
+    <div class="container section">
+      <div class="results-layout">
+
+        <!-- רשימת טיסות -->
+        <div>
+          <h2 style="margin-bottom:20px;font-size:1.2rem;color:var(--color-muted);font-weight:600;">בחר את הטיסה שלך</h2>
+          <div class="flight-list" aria-label="טיסות זמינות" role="list">
+            <!-- טיסות נוצרות על ידי JS -->
+          </div>
+
+          <div class="btn-group mt-8">
+            <button id="back-btn" class="btn btn-ghost">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+              חזרה
+            </button>
+            <button id="next-btn" class="btn btn-primary">
+              המשך לבחירת מושב
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M19 12H5M12 5l-7 7 7 7"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- תוספות -->
+        <aside aria-label="שירותים נוספים">
+          <div class="card extras-card">
+            <h3>הוסף שירותים נוספים</h3>
+            <p class="text-muted" style="font-size:0.85rem;margin-bottom:16px;">שדרג את המסע שלך</p>
+
+            <div class="extra-item" data-extra="luggage" role="checkbox" aria-checked="false" tabindex="0">
+              <div class="extra-checkbox" aria-hidden="true"></div>
+              <div class="extra-info">
+                <div class="extra-name">מזוודה לבטן המטוס</div>
+                <div class="extra-desc">1 × 23 ק"ג</div>
+              </div>
+              <div class="extra-price">+€35</div>
+            </div>
+
+            <div class="extra-item" data-extra="priority" role="checkbox" aria-checked="false" tabindex="0">
+              <div class="extra-checkbox" aria-hidden="true"></div>
+              <div class="extra-info">
+                <div class="extra-name">עלייה מועדפת למטוס</div>
+                <div class="extra-desc">עלה לפני כולם</div>
+              </div>
+              <div class="extra-price">+€15</div>
+            </div>
+
+            <div class="extra-item" data-extra="drinks" role="checkbox" aria-checked="false" tabindex="0">
+              <div class="extra-checkbox" aria-hidden="true"></div>
+              <div class="extra-info">
+                <div class="extra-name">משקאות מיוחדים</div>
+                <div class="extra-desc">מארז קוקטיילים פרמיום</div>
+              </div>
+              <div class="extra-price">+€25</div>
+            </div>
+
+            <hr class="divider" />
+            <div class="d-flex justify-between align-center">
+              <span class="font-bold">סה"כ משוער</span>
+              <span class="font-bold" id="extras-total" style="color:var(--color-primary);font-size:1.2rem;">€—</span>
+            </div>
+            <p class="text-muted" style="font-size:0.75rem;margin-top:6px;">לנוסע · כולל מסים</p>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-bottom">
+        <span>&copy; 2025 VolAir Airlines</span>
+        <a href="index.html" style="color:rgba(255,255,255,0.45);">→ חזרה לדף הבית</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Hebrew labels for JS-generated flight cards
+    window.VOLAIR_LABELS = {
+      bestValue: 'הכי משתלם',
+      mostPopular: 'הפופולרי ביותר',
+      direct: 'ישיר',
+      perPassenger: 'לנוסע',
+      select: 'בחר',
+      selected: 'נבחר ✓'
+    };
+  </script>
+  <script src="js/app.js"></script>
+</body>
+</html>

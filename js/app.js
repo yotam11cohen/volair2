@@ -1,0 +1,620 @@
+/* ============================================
+   VolAir Airlines — Main JavaScript
+   ============================================ */
+
+'use strict';
+
+// ── State ──────────────────────────────────────
+const STATE = {
+  tripType:      'one-way',
+  departure:     '',
+  returnDate:    '',
+  passengers:    { adults: 1, teens: 0, children: 0 },
+  selectedFlight: null,
+  extras:        { luggage: false, priority: false, drinks: false },
+  selectedSeats: [],
+  contact:       { email: '', phone: '' },
+  paymentMethod: 'card',
+  totalPrice:    0,
+  bookingRef:    ''
+};
+
+// Price map
+const EXTRA_PRICES = { luggage: 35, priority: 15, drinks: 25 };
+const BASE_PRICES  = { 'VA101': 120, 'VA203': 95, 'VA315': 145 };
+
+// ── Utility helpers ────────────────────────────
+function $(sel, ctx = document) { return ctx.querySelector(sel); }
+function $$(sel, ctx = document) { return [...ctx.querySelectorAll(sel)]; }
+
+function saveState() {
+  try { sessionStorage.setItem('volair_state', JSON.stringify(STATE)); } catch(e) {}
+}
+function loadState() {
+  try {
+    const s = sessionStorage.getItem('volair_state');
+    if (s) Object.assign(STATE, JSON.parse(s));
+  } catch(e) {}
+}
+
+function formatPrice(n) { return '€' + n.toFixed(2); }
+
+function generateRef() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let ref = 'VA';
+  for (let i = 0; i < 6; i++) ref += chars[Math.floor(Math.random() * chars.length)];
+  return ref;
+}
+
+// ── Mobile nav toggle ──────────────────────────
+function initNav() {
+  const toggle = $('.nav-toggle');
+  const links  = $('.nav-links');
+  if (!toggle || !links) return;
+
+  toggle.addEventListener('click', () => {
+    const open = links.classList.toggle('open');
+    toggle.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+
+  // Close on link click
+  $$('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => {
+      links.classList.remove('open');
+      toggle.classList.remove('open');
+      toggle.setAttribute('aria-expanded', false);
+      document.body.style.overflow = '';
+    });
+  });
+
+  // Highlight active page
+  const page = location.pathname.split('/').pop() || 'index.html';
+  $$('.nav-links a').forEach(a => {
+    const href = a.getAttribute('href');
+    if (href === page || (page === '' && href === 'index.html')) {
+      a.classList.add('active');
+    }
+  });
+}
+
+// ── FLIGHTS PAGE ───────────────────────────────
+function initFlightsPage() {
+  if (!$('.flights-page')) return;
+  loadState();
+
+  // Trip type toggle
+  $$('.toggle-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      $$('.toggle-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      STATE.tripType = btn.dataset.type;
+      const returnRow = $('.return-row');
+      if (returnRow) returnRow.classList.toggle('visible', STATE.tripType === 'round-trip');
+      saveState();
+    });
+  });
+
+  // Restore trip type
+  if (STATE.tripType === 'round-trip') {
+    const btn = $('[data-type="round-trip"]');
+    if (btn) { btn.click(); }
+  }
+
+  // Passenger counters
+  $$('.counter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.target;
+      const valEl  = $(`[data-val="${target}"]`);
+      if (!valEl) return;
+
+      let val = parseInt(valEl.textContent) || 0;
+      const min = parseInt(valEl.dataset.min ?? 0);
+      const max = parseInt(valEl.dataset.max ?? 9);
+
+      if (btn.dataset.action === 'inc') val = Math.min(val + 1, max);
+      if (btn.dataset.action === 'dec') val = Math.max(val - 1, min);
+
+      valEl.textContent = val;
+      STATE.passengers[target] = val;
+      saveState();
+    });
+  });
+
+  // Restore passenger counts
+  Object.entries(STATE.passengers).forEach(([k, v]) => {
+    const el = $(`[data-val="${k}"]`);
+    if (el) el.textContent = v;
+  });
+
+  // Date inputs
+  const deptInput = $('#departure-date');
+  const retInput  = $('#return-date');
+
+  // Set min date to today
+  const today = new Date().toISOString().split('T')[0];
+  if (deptInput) { deptInput.min = today; deptInput.value = STATE.departure || ''; }
+  if (retInput)  { retInput.min  = today; retInput.value  = STATE.returnDate || ''; }
+
+  if (deptInput) deptInput.addEventListener('change', () => {
+    STATE.departure = deptInput.value;
+    if (retInput) retInput.min = deptInput.value;
+    saveState();
+  });
+  if (retInput) retInput.addEventListener('change', () => {
+    STATE.returnDate = retInput.value;
+    saveState();
+  });
+
+  // Search button
+  const searchBtn = $('#search-btn');
+  if (searchBtn) {
+    searchBtn.addEventListener('click', () => {
+      if (!deptInput || !deptInput.value) {
+        showError(deptInput, 'נא לבחור תאריך יציאה.');
+        return;
+      }
+      const totalPassengers = STATE.passengers.adults + STATE.passengers.teens + STATE.passengers.children;
+      if (totalPassengers < 1) {
+        showToast('נא להוסיף לפחות נוסע אחד.', 'error');
+        return;
+      }
+      STATE.departure = deptInput.value;
+      saveState();
+      window.location.href = 'results.html';
+    });
+  }
+}
+
+// ── RESULTS PAGE ───────────────────────────────
+function initResultsPage() {
+  if (!$('.results-page')) return;
+  loadState();
+
+  const L = window.VOLAIR_LABELS || {};
+  const flights = [
+    { id: 'VA101', dep: '06:30', arr: '08:45', duration: '2h 15m', price: 120, label: L.bestValue    || 'Best Value' },
+    { id: 'VA203', dep: '11:00', arr: '13:10', duration: '2h 10m', price: 95,  label: null },
+    { id: 'VA315', dep: '17:45', arr: '20:05', duration: '2h 20m', price: 145, label: L.mostPopular  || 'Most Popular' }
+  ];
+
+  const list = $('.flight-list');
+  if (list) {
+    flights.forEach(f => {
+      const card = document.createElement('div');
+      card.className = 'flight-card' + (f.id === STATE.selectedFlight ? ' selected' : '');
+      card.dataset.id = f.id;
+      const isBest = f.label === (L.bestValue || 'Best Value');
+      card.innerHTML = `
+        <div class="flight-header">
+          <span class="flight-number">${f.id}</span>
+          ${f.label ? `<span class="flight-badge ${isBest?'best':''}">${f.label}</span>` : ''}
+        </div>
+        <div class="flight-times">
+          <div class="flight-time">
+            <div class="time">${f.dep}</div>
+            <div class="airport">TLV</div>
+          </div>
+          <div class="flight-duration">
+            <div class="duration-text">${f.duration}</div>
+            <div class="duration-line"></div>
+            <div class="flight-direct">${L.direct || 'Direct'}</div>
+          </div>
+          <div class="flight-time">
+            <div class="time">${f.arr}</div>
+            <div class="airport">BCN</div>
+          </div>
+        </div>
+        <div class="flight-footer">
+          <div class="flight-price">
+            <div class="amount">${formatPrice(f.price)}</div>
+            <div class="per">${L.perPassenger || 'per passenger'}</div>
+          </div>
+          <button class="btn btn-primary btn-sm select-flight-btn" data-id="${f.id}">
+            ${f.id === STATE.selectedFlight ? (L.selected||'Selected ✓') : (L.select||'Select')}
+          </button>
+        </div>`;
+      list.appendChild(card);
+    });
+
+    // Select flight
+    list.addEventListener('click', e => {
+      const btn = e.target.closest('.select-flight-btn');
+      if (!btn) return;
+      const id = btn.dataset.id;
+      STATE.selectedFlight = id;
+      const flight = flights.find(f => f.id === id);
+      STATE.totalPrice = flight ? flight.price : 0;
+      saveState();
+
+      $$('.flight-card').forEach(c => c.classList.remove('selected'));
+      $$('.select-flight-btn').forEach(b => { b.textContent = L.select || 'Select'; });
+      btn.closest('.flight-card').classList.add('selected');
+      btn.textContent = L.selected || 'Selected ✓';
+
+      updateExtrasTotal();
+    });
+  }
+
+  // Extras
+  $$('.extra-item').forEach(item => {
+    const chk = item.querySelector('.extra-checkbox');
+    const key = item.dataset.extra;
+    if (!chk || !key) return;
+
+    if (STATE.extras[key]) chk.classList.add('checked');
+
+    item.addEventListener('click', () => {
+      STATE.extras[key] = !STATE.extras[key];
+      chk.classList.toggle('checked', STATE.extras[key]);
+      saveState();
+      updateExtrasTotal();
+    });
+  });
+
+  function updateExtrasTotal() {
+    const basePrice = STATE.selectedFlight ? (BASE_PRICES[STATE.selectedFlight] || 0) : 0;
+    const extraTotal = Object.entries(STATE.extras)
+      .filter(([,v]) => v)
+      .reduce((sum, [k]) => sum + (EXTRA_PRICES[k] || 0), 0);
+    const totalEl = $('#extras-total');
+    if (totalEl) totalEl.textContent = formatPrice(basePrice + extraTotal);
+  }
+
+  updateExtrasTotal();
+
+  // Navigation
+  const nextBtn = $('#next-btn');
+  if (nextBtn) nextBtn.addEventListener('click', () => {
+    if (!STATE.selectedFlight) { showToast('נא לבחור טיסה תחילה.', 'error'); return; }
+    window.location.href = 'seats.html';
+  });
+
+  const backBtn = $('#back-btn');
+  if (backBtn) backBtn.addEventListener('click', () => window.location.href = 'flights.html');
+}
+
+// ── SEATS PAGE ─────────────────────────────────
+function initSeatsPage() {
+  if (!$('.seats-page')) return;
+  loadState();
+
+  // Define pre-taken seats
+  const TAKEN = ['1A','1C','2B','2D','3A','4C','4E','5B','6A','6F','7D','8B','8E','9C','10A','10F','11D','12B','13A','13E','14C','15B','16A','16D','17F','18C','19A','19E','20B'];
+
+  const totalPassengers = STATE.passengers.adults + STATE.passengers.teens + STATE.passengers.children || 1;
+
+  const map = $('.seat-map');
+  if (!map) return;
+
+  // Build seat map: rows 1-20, cols A-F (3+3)
+  for (let row = 1; row <= 20; row++) {
+    const rowEl = document.createElement('div');
+    rowEl.className = 'seat-row';
+
+    const numEl = document.createElement('div');
+    numEl.className = 'seat-row-num';
+    numEl.textContent = row;
+    rowEl.appendChild(numEl);
+
+    ['A','B','C'].forEach(col => {
+      const seat = makeSeat(row, col, TAKEN);
+      rowEl.appendChild(seat);
+    });
+
+    const aisle = document.createElement('div');
+    aisle.className = 'seat-aisle';
+    rowEl.appendChild(aisle);
+
+    ['D','E','F'].forEach(col => {
+      const seat = makeSeat(row, col, TAKEN);
+      rowEl.appendChild(seat);
+    });
+
+    map.appendChild(rowEl);
+  }
+
+  function makeSeat(row, col, taken) {
+    const id = `${row}${col}`;
+    const el = document.createElement('div');
+    el.className = 'seat ' + (taken.includes(id) ? 'taken' : 'available') + (row <= 3 ? ' first-class' : '');
+    el.dataset.seat = id;
+    el.setAttribute('role', 'button');
+    el.setAttribute('aria-label', `Seat ${id}${taken.includes(id) ? ' - taken' : ''}`);
+    el.textContent = col;
+    if (!taken.includes(id)) {
+      el.addEventListener('click', () => toggleSeat(el, id, totalPassengers));
+    }
+    return el;
+  }
+
+  function toggleSeat(el, id, max) {
+    if (el.classList.contains('taken')) return;
+
+    if (el.classList.contains('selected')) {
+      el.classList.remove('selected');
+      el.classList.add('available');
+      STATE.selectedSeats = STATE.selectedSeats.filter(s => s !== id);
+    } else {
+      if (STATE.selectedSeats.length >= max) {
+        showToast(`ניתן לבחור עד ${max} מושב(ים) בלבד.`, 'warn');
+        return;
+      }
+      el.classList.remove('available');
+      el.classList.add('selected');
+      STATE.selectedSeats.push(id);
+    }
+    saveState();
+    updateSeatInfo();
+  }
+
+  // Restore previously selected seats
+  STATE.selectedSeats.forEach(id => {
+    const el = $(`.seat[data-seat="${id}"]`);
+    if (el && !el.classList.contains('taken')) {
+      el.classList.remove('available');
+      el.classList.add('selected');
+    }
+  });
+
+  function updateSeatInfo() {
+    const infoEl = $('.selected-seats-info');
+    const SL = window.VOLAIR_LABELS || {};
+    if (!infoEl) return;
+    if (STATE.selectedSeats.length === 0) {
+      infoEl.innerHTML = `<span class="text-muted">${SL.noSeats || 'No seats selected yet.'}</span>`;
+    } else {
+      const sel   = SL.seatsSelected || 'Selected';
+      const ofLbl = SL.of            || 'of';
+      const pass  = SL.passengers    || 'passengers';
+      infoEl.innerHTML = `<strong>${sel}:</strong> ${STATE.selectedSeats.join(', ')} &nbsp;|&nbsp; <strong>${STATE.selectedSeats.length}/${totalPassengers}</strong> ${pass}`;
+    }
+  }
+  updateSeatInfo();
+
+  const nextBtn = $('#next-btn');
+  if (nextBtn) nextBtn.addEventListener('click', () => {
+    if (STATE.selectedSeats.length < totalPassengers) {
+      showToast(`נא לבחור ${totalPassengers} מושב(ים) עבור כל הנוסעים.`, 'error');
+      return;
+    }
+    window.location.href = 'summary.html';
+  });
+
+  const backBtn = $('#back-btn');
+  if (backBtn) backBtn.addEventListener('click', () => window.location.href = 'results.html');
+}
+
+// ── SUMMARY PAGE ───────────────────────────────
+function initSummaryPage() {
+  if (!$('.summary-page')) return;
+  loadState();
+
+  const totalPassengers = STATE.passengers.adults + STATE.passengers.teens + STATE.passengers.children || 1;
+  const basePrice = STATE.selectedFlight ? (BASE_PRICES[STATE.selectedFlight] || 120) : 120;
+  const extrasTotal = Object.entries(STATE.extras)
+    .filter(([,v]) => v)
+    .reduce((sum,[k]) => sum + (EXTRA_PRICES[k]||0), 0);
+  const total = (basePrice + extrasTotal) * totalPassengers;
+  STATE.totalPrice = total;
+
+  // Populate summary display
+  const sets = {
+    '#sum-flight':    STATE.selectedFlight || 'VA101',
+    '#sum-seats':     STATE.selectedSeats.join(', ') || '—',
+    '#sum-passengers': totalPassengers,
+    '#sum-extras':    Object.entries(STATE.extras).filter(([,v])=>v).map(([k])=>k).join(', ') || 'None',
+    '#sum-base':      formatPrice(basePrice * totalPassengers),
+    '#sum-extras-cost': formatPrice(extrasTotal * totalPassengers),
+    '#sum-total':     formatPrice(total)
+  };
+  Object.entries(sets).forEach(([sel, val]) => {
+    const el = $(sel);
+    if (el) el.textContent = val;
+  });
+
+  // Contact form
+  const form = $('#contact-form');
+  if (form) {
+    const emailInput = $('#contact-email');
+    const phoneInput = $('#contact-phone');
+
+    if (emailInput) emailInput.value = STATE.contact.email || '';
+    if (phoneInput) phoneInput.value = STATE.contact.phone || '';
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      let valid = true;
+
+      if (!emailInput.value || !emailInput.checkValidity()) {
+        showError(emailInput, 'נא להזין כתובת דוא"ל תקינה.');
+        valid = false;
+      }
+      if (!phoneInput.value) {
+        showError(phoneInput, 'נא להזין מספר טלפון.');
+        valid = false;
+      }
+
+      if (!valid) return;
+
+      STATE.contact.email = emailInput.value;
+      STATE.contact.phone = phoneInput.value;
+      saveState();
+      window.location.href = 'payment.html';
+    });
+  }
+
+  const backBtn = $('#back-btn');
+  if (backBtn) backBtn.addEventListener('click', () => window.location.href = 'seats.html');
+}
+
+// ── PAYMENT PAGE ───────────────────────────────
+function initPaymentPage() {
+  if (!$('.payment-page')) return;
+  loadState();
+
+  const totalEl = $('#pay-total');
+  if (totalEl) totalEl.textContent = formatPrice(STATE.totalPrice || 0);
+
+  // Payment method selection
+  $$('.payment-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      $$('.payment-option').forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+      STATE.paymentMethod = opt.dataset.method;
+      saveState();
+
+      // Show card form only for credit card
+      const cardForm = $('.card-form');
+      if (cardForm) cardForm.classList.toggle('visible', STATE.paymentMethod === 'card');
+
+      // Update radio visuals
+      $$('.payment-radio').forEach(r => r.style.removeProperty('border-color'));
+      opt.querySelector('.payment-radio').style.borderColor = 'var(--color-primary)';
+    });
+  });
+
+  // Restore selection
+  const savedOpt = $(`.payment-option[data-method="${STATE.paymentMethod}"]`);
+  if (savedOpt) savedOpt.click();
+
+  // Pay button
+  const payBtn = $('#pay-btn');
+  if (payBtn) {
+    payBtn.addEventListener('click', () => {
+      if (STATE.paymentMethod === 'card') {
+        const cardNum = $('#card-number');
+        const expiry  = $('#card-expiry');
+        const cvv     = $('#card-cvv');
+        const name    = $('#card-name');
+        if (!cardNum?.value || !expiry?.value || !cvv?.value || !name?.value) {
+          showToast('נא למלא את כל פרטי כרטיס האשראי.', 'error');
+          return;
+        }
+      }
+
+      // Generate booking reference
+      STATE.bookingRef = generateRef();
+      saveState();
+
+      // Simulate processing
+      payBtn.disabled = true;
+      payBtn.textContent = 'Processing…';
+      setTimeout(() => window.location.href = 'confirmation.html', 1500);
+    });
+  }
+
+  const backBtn = $('#back-btn');
+  if (backBtn) backBtn.addEventListener('click', () => window.location.href = 'summary.html');
+}
+
+// ── CONFIRMATION PAGE ──────────────────────────
+function initConfirmationPage() {
+  if (!$('.confirmation-page')) return;
+  loadState();
+
+  const ref = STATE.bookingRef || generateRef();
+  STATE.bookingRef = ref;
+
+  const sets = {
+    '#conf-ref':        ref,
+    '#conf-flight':     STATE.selectedFlight || 'VA101',
+    '#conf-seats':      STATE.selectedSeats.join(', ') || '—',
+    '#conf-passengers': (STATE.passengers.adults + STATE.passengers.teens + STATE.passengers.children) || 1,
+    '#conf-email':      STATE.contact.email || '—',
+    '#conf-total':      formatPrice(STATE.totalPrice || 0),
+    '#conf-date':       STATE.departure || '—',
+    '#conf-extras':     Object.entries(STATE.extras).filter(([,v])=>v).map(([k])=>k).join(', ') || 'None'
+  };
+  Object.entries(sets).forEach(([sel, val]) => {
+    const el = $(sel);
+    if (el) el.textContent = val;
+  });
+
+  // Print
+  const printBtn = $('#print-btn');
+  if (printBtn) printBtn.addEventListener('click', () => window.print());
+
+  // Save as text
+  const saveBtn = $('#save-btn');
+  if (saveBtn) {
+    saveBtn.addEventListener('click', () => {
+      const hebrewExtrasMap = { luggage: 'מזוודה', priority: 'עלייה מועדפת', drinks: 'משקאות' };
+      const activeExtrasHe = Object.entries(STATE.extras||{}).filter(([,v])=>v).map(([k])=>hebrewExtrasMap[k]||k);
+      const content = [
+        'VolAir Airlines — אישור הזמנה',
+        '═══════════════════════════════════════',
+        `מספר הזמנה: ${ref}`,
+        `טיסה:       ${STATE.selectedFlight || 'VA101'}`,
+        `תאריך:      ${STATE.departure || '—'}`,
+        `מושבים:     ${STATE.selectedSeats.join(', ') || '—'}`,
+        `תוספות:     ${activeExtrasHe.join(', ') || 'ללא'}`,
+        `דוא"ל:      ${STATE.contact.email || '—'}`,
+        `סה"כ שולם:  ${formatPrice(STATE.totalPrice || 0)}`,
+        '',
+        '!תודה שטסת עם VolAir Airlines'
+      ].join('\n');
+
+      const blob = new Blob([content], { type: 'text/plain' });
+      const url  = URL.createObjectURL(blob);
+      const a    = document.createElement('a');
+      a.href = url;
+      a.download = `VolAir-${ref}.txt`;
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+  }
+
+  // New booking
+  const newBtn = $('#new-booking-btn');
+  if (newBtn) newBtn.addEventListener('click', () => {
+    sessionStorage.removeItem('volair_state');
+    window.location.href = 'index.html';
+  });
+}
+
+// ── Toast notifications ────────────────────────
+function showToast(msg, type = 'info') {
+  const existing = $('.volair-toast');
+  if (existing) existing.remove();
+
+  const toast = document.createElement('div');
+  toast.className = 'volair-toast';
+  toast.setAttribute('role', 'alert');
+  toast.setAttribute('aria-live', 'polite');
+  toast.style.cssText = `
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+    z-index: 9999; padding: 14px 24px; border-radius: 12px;
+    font-family: var(--font-sans,sans-serif); font-size: 0.95rem; font-weight: 600;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2); max-width: 90vw;
+    background: ${{ info:'#0A1628', error:'#C62828', warn:'#E65100', success:'#2E7D32' }[type]};
+    color: #fff; text-align: center;
+  `;
+  toast.textContent = msg;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 4000);
+}
+
+function showError(input, msg) {
+  if (!input) return;
+  input.style.borderColor = 'var(--color-danger)';
+  input.focus();
+  const errEl = input.parentElement?.querySelector('.form-error');
+  if (errEl) { errEl.textContent = msg; errEl.classList.add('visible'); }
+  input.addEventListener('input', () => {
+    input.style.borderColor = '';
+    if (errEl) errEl.classList.remove('visible');
+  }, { once: true });
+}
+
+// ── Init ───────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  initNav();
+  initFlightsPage();
+  initResultsPage();
+  initSeatsPage();
+  initSummaryPage();
+  initPaymentPage();
+  initConfirmationPage();
+});

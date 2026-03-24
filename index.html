@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VolAir Airlines — טוס גבוה יותר</title>
+  <meta name="description" content="VolAir Airlines — שער מודרני ומשתלם ליעדים הטובים ביותר באירופה." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ── ניווט ── -->
+  <nav class="navbar" role="navigation" aria-label="ניווט ראשי">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="דף הבית של VolAir Airlines">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <circle cx="16" cy="16" r="16" fill="#00B5C8" opacity="0.15"/>
+          <path d="M6 16 L26 10 L22 16 L26 22 Z" fill="#00B5C8"/>
+          <path d="M14 16 L10 20 L12 16 L10 12 Z" fill="#7ED321"/>
+        </svg>
+        <span>Vol<span>Air</span></span>
+      </a>
+      <button class="nav-toggle" aria-label="פתח/סגור תפריט ניווט" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html" class="active">בית</a></li>
+        <li><a href="flights.html" class="btn-nav">הזמן טיסה</a></li>
+        <li><a href="crew.html">הצוות שלנו</a></li>
+        <li><a href="fleet.html">הצי שלנו</a></li>
+        <li><a href="about.html">אודות</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ── הירו ── -->
+  <header class="hero" role="banner">
+    <div class="hero-bg" aria-hidden="true">
+      <img src="images/hero-plane.jpg" alt="" loading="eager" />
+      <div class="hero-bg-gradient"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M3.5 18.5l7.5-7.5 4 4 7.5-9"/>
+        </svg>
+        חברת התעופה התקציבית האהובה באירופה
+      </div>
+
+      <h1 class="hero-title">
+        טוס חכם יותר.<br>
+        <span class="brand-color">חיה</span> <span class="accent-color">טוב יותר.</span>
+      </h1>
+      <p class="hero-slogan">״השמיים הם לא הגבול — הם הבית שלך.״</p>
+
+      <!-- תמונת מטוס עם fallback SVG -->
+      <div class="hero-plane" aria-hidden="true">
+        <img src="images/volair-plane.jpg"
+             alt="מטוס VolAir בטיסה"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+             loading="eager" />
+        <div class="hero-plane-placeholder" style="display:none;">
+          <svg viewBox="0 0 560 315" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="560" height="315" fill="url(#skyGrad)"/>
+            <defs>
+              <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#0D3D6B"/>
+                <stop offset="100%" stop-color="#1565A8"/>
+              </linearGradient>
+            </defs>
+            <ellipse cx="80" cy="80" rx="50" ry="20" fill="white" opacity="0.1"/>
+            <ellipse cx="440" cy="60" rx="70" ry="24" fill="white" opacity="0.08"/>
+            <g transform="translate(90,120)">
+              <path d="M0 40 L280 20 L340 40 L280 60 Z" fill="#00B5C8" opacity="0.9"/>
+              <path d="M120 20 L200 0 L220 20 Z" fill="#4A9FE8" opacity="0.8"/>
+              <path d="M120 60 L180 80 L200 60 Z" fill="#4A9FE8" opacity="0.7"/>
+              <path d="M280 40 L340 32 L344 40 L340 48 Z" fill="#7ED321" opacity="0.9"/>
+              <rect x="60" y="34" width="10" height="8" rx="3" fill="white" opacity="0.6"/>
+              <rect x="80" y="34" width="10" height="8" rx="3" fill="white" opacity="0.6"/>
+              <rect x="100" y="34" width="10" height="8" rx="3" fill="white" opacity="0.6"/>
+              <rect x="140" y="34" width="10" height="8" rx="3" fill="white" opacity="0.5"/>
+              <rect x="160" y="34" width="10" height="8" rx="3" fill="white" opacity="0.5"/>
+              <rect x="180" y="34" width="10" height="8" rx="3" fill="white" opacity="0.5"/>
+              <text x="100" y="29" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#00B5C8" opacity="0.9">VolAir</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <!-- לוגו תג -->
+      <div class="hero-logo-badge">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+          <circle cx="18" cy="18" r="18" fill="#00B5C8" opacity="0.2"/>
+          <path d="M7 18 L29 11.5 L25 18 L29 24.5 Z" fill="#00B5C8"/>
+          <path d="M16 18 L11.5 22.5 L13.5 18 L11.5 13.5 Z" fill="#7ED321"/>
+        </svg>
+        <div>
+          <div class="brand-name">Vol<span>Air</span> Airlines</div>
+          <div class="brand-tagline">מטיסים אותך רחוק יותר מאז 2010</div>
+        </div>
+      </div>
+
+      <div class="btn-group" style="justify-content:center;">
+        <a href="flights.html" class="btn btn-primary btn-lg">הזמן טיסה</a>
+        <a href="about.html"   class="btn btn-outline btn-lg" style="color:#fff;border-color:rgba(255,255,255,0.4);">קרא עוד</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ── יעדים ── -->
+    <section class="destinations" aria-labelledby="dest-heading">
+      <div class="container">
+        <h2 id="dest-heading">יעדים פופולריים</h2>
+        <p class="section-subtitle">לחץ על יעד כלשהו כדי להתחיל להזמין את ההרפתקה הבאה שלך</p>
+
+        <div class="destinations-grid">
+
+          <!-- ברצלונה -->
+          <a href="flights.html" class="dest-card" aria-label="טוס לברצלונה מ-€79">
+            <img class="dest-card-img"
+                 src="images/dest-barcelona.jpg"
+                 alt="ברצלונה, ספרד — הסגרדה פמיליה בשקיעה"
+                 loading="lazy"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+            <div class="dest-card-placeholder" style="display:none;background:linear-gradient(160deg,#C0392B,#E74C3C,#F39C12);"></div>
+            <div class="dest-card-overlay">
+              <div class="dest-city">ברצלונה</div>
+              <div class="dest-country">ספרד</div>
+              <div class="dest-price">מ-<strong>€79</strong></div>
+            </div>
+          </a>
+
+          <!-- ליסבון -->
+          <a href="flights.html" class="dest-card" aria-label="טוס לליסבון מ-€65">
+            <img class="dest-card-img"
+                 src="images/dest-lisbon.jpg"
+                 alt="ליסבון, פורטוגל — חשמליות צבעוניות ברחובות ההיסטוריים"
+                 loading="lazy"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+            <div class="dest-card-placeholder" style="display:none;background:linear-gradient(160deg,#1565A8,#1E88E5,#00B5C8);"></div>
+            <div class="dest-card-overlay">
+              <div class="dest-city">ליסבון</div>
+              <div class="dest-country">פורטוגל</div>
+              <div class="dest-price">מ-<strong>€65</strong></div>
+            </div>
+          </a>
+
+          <!-- רומא -->
+          <a href="flights.html" class="dest-card" aria-label="טוס לרומא מ-€89">
+            <img class="dest-card-img"
+                 src="images/dest-rome.jpg"
+                 alt="רומא, איטליה — הקולוסיאום בשקיעה"
+                 loading="lazy"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+            <div class="dest-card-placeholder" style="display:none;background:linear-gradient(160deg,#6A1B9A,#8E24AA,#E91E63);"></div>
+            <div class="dest-card-overlay">
+              <div class="dest-city">רומא</div>
+              <div class="dest-country">איטליה</div>
+              <div class="dest-price">מ-<strong>€89</strong></div>
+            </div>
+          </a>
+
+          <!-- פראג -->
+          <a href="flights.html" class="dest-card" aria-label="טוס לפראג מ-€72">
+            <img class="dest-card-img"
+                 src="images/dest-prague.jpg"
+                 alt="פראג, צ'כיה — כיכר העיר העתיקה בלילה"
+                 loading="lazy"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+            <div class="dest-card-placeholder" style="display:none;background:linear-gradient(160deg,#004D40,#00897B,#7ED321);"></div>
+            <div class="dest-card-overlay">
+              <div class="dest-city">פראג</div>
+              <div class="dest-country">צ'כיה</div>
+              <div class="dest-price">מ-<strong>€72</strong></div>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── למה VolAir ── -->
+    <section class="why-fly" aria-labelledby="why-heading">
+      <div class="container">
+        <h2 id="why-heading">למה לטוס איתנו?</h2>
+        <div class="why-grid">
+
+          <div class="why-item">
+            <div class="why-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+            </div>
+            <h3>בטוח ואמין</h3>
+            <p>הצי המודרני שלנו וצוות המיומן ביותר מבטיחים שכל טיסה עומדת בתקני הבטיחות הגבוהים ביותר בתעשייה.</p>
+          </div>
+
+          <div class="why-item">
+            <div class="why-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="1" x2="12" y2="23"/>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              </svg>
+            </div>
+            <h3>ערובת המחיר הטוב ביותר</h3>
+            <p>אנחנו מציעים מחירים תחרותיים ללא עמלות נסתרות. מצאת מחיר נמוך יותר? נשווה אותו.</p>
+          </div>
+
+          <div class="why-item">
+            <div class="why-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
+            <h3>דייקנות בלוח הזמנים</h3>
+            <p>97% יציאות בזמן ב-2024. אנחנו מכבדים את הזמן שלך ועושים כל מאמץ לשמור על לוח הזמנים.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ── כותרת תחתונה ── -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <div class="logo-text">Vol<span>Air</span> Airlines</div>
+          <p>תעופה מודרנית ומשתלמת המחברת אתכם לערים היפות ביותר באירופה. מטיסים גבוה יותר מאז 2010.</p>
+        </div>
+        <div class="footer-col">
+          <h5>הזמנה</h5>
+          <ul>
+            <li><a href="flights.html">חיפוש טיסות</a></li>
+            <li><a href="flights.html">הלוך ושוב</a></li>
+            <li><a href="flights.html">כיוון אחד</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>החברה</h5>
+          <ul>
+            <li><a href="about.html">אודות</a></li>
+            <li><a href="crew.html">הצוות שלנו</a></li>
+            <li><a href="fleet.html">הצי שלנו</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>תמיכה</h5>
+          <ul>
+            <li><a href="#">מרכז עזרה</a></li>
+            <li><a href="#">ניהול הזמנה</a></li>
+            <li><a href="#">צור קשר</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2025 VolAir Airlines. כל הזכויות שמורות.</span>
+        <span>עוצב באהבה ✦ תל אביב</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

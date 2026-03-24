@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>הצוות שלנו — VolAir Airlines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <nav class="navbar" role="navigation" aria-label="ניווט ראשי">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <circle cx="16" cy="16" r="16" fill="#00B5C8" opacity="0.15"/>
+          <path d="M6 16 L26 10 L22 16 L26 22 Z" fill="#00B5C8"/>
+          <path d="M14 16 L10 20 L12 16 L10 12 Z" fill="#7ED321"/>
+        </svg>
+        <span>Vol<span>Air</span></span>
+      </a>
+      <button class="nav-toggle" aria-label="פתח/סגור תפריט" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">בית</a></li>
+        <li><a href="flights.html" class="btn-nav">הזמן טיסה</a></li>
+        <li><a href="crew.html" class="active">הצוות שלנו</a></li>
+        <li><a href="fleet.html">הצי שלנו</a></li>
+        <li><a href="about.html">אודות</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="page-hero">
+    <div class="container">
+      <h1>הצוות שלנו</h1>
+      <p>האנשים הנלהבים מאחורי כל טיסת VolAir</p>
+    </div>
+  </div>
+
+  <main>
+    <div class="container section">
+
+      <!-- הקדמה -->
+      <div style="max-width:720px;margin:0 auto 48px;text-align:center;">
+        <h2 style="margin-bottom:16px;">הכר את הצוות שמגיע איתך ליעד</h2>
+        <p style="font-size:1.05rem;line-height:1.8;">
+          ב-VolAir Airlines, הצוות שלנו הוא הלב של כל מה שאנחנו עושים. מרגע שאתה עולה על המטוס
+          ועד לנחיתה, הצוות המיומן והמסור שלנו עובד ללא לאות כדי להבטיח את הנוחות, הבטיחות
+          והשמחה שלך. אנחנו מגייסים על פי אופי ומאמנים לשלמות.
+        </p>
+      </div>
+
+      <!-- שתי תמונות צוות -->
+      <div class="crew-hero-images">
+
+        <div class="crew-img-card">
+          <img src="images/crew-smiling.jpg"
+               alt="אנשי צוות הקבינה של VolAir מחייכים ומוכנים לשרת את הנוסעים"
+               loading="lazy"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <div class="crew-img-placeholder"
+               style="display:none;background:linear-gradient(135deg,#00B5C8,#4A9FE8);"
+               role="img"
+               aria-label="צוות הקבינה מחייך — תמונת placeholder">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" aria-hidden="true">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+            <span style="font-size:0.9rem;font-weight:700;">צוות הקבינה — מחייכים ומוכנים</span>
+          </div>
+          <div class="caption">צוות הקבינה שלנו</div>
+        </div>
+
+        <div class="crew-img-card">
+          <img src="images/crew-pilot.jpg"
+               alt="טייס VolAir בתא הטייסים מתכונן לטיסה"
+               loading="lazy"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <div class="crew-img-placeholder"
+               style="display:none;background:linear-gradient(135deg,#0A1628,#0D3D6B);"
+               role="img"
+               aria-label="טייס בתא הטייסים — תמונת placeholder">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" aria-hidden="true">
+              <circle cx="12" cy="8" r="4"/>
+              <path d="M3 20c0-4 4-7 9-7s9 3 9 7"/>
+            </svg>
+            <span style="font-size:0.9rem;font-weight:700;">הקפטן שלנו בתא הטייסים</span>
+          </div>
+          <div class="caption">תא הטייסים</div>
+        </div>
+
+      </div>
+
+      <!-- סטטיסטיקות צוות -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin:48px 0;text-align:center;">
+        <div class="card card-sm"><div class="stat-item"><div class="num" style="font-size:2rem;font-weight:800;color:var(--color-primary);">240+</div><div style="font-size:0.85rem;color:var(--color-muted);margin-top:4px;">חברי צוות</div></div></div>
+        <div class="card card-sm"><div class="stat-item"><div class="num" style="font-size:2rem;font-weight:800;color:var(--color-primary);">18</div><div style="font-size:0.85rem;color:var(--color-muted);margin-top:4px;">לאומים</div></div></div>
+        <div class="card card-sm"><div class="stat-item"><div class="num" style="font-size:2rem;font-weight:800;color:var(--color-primary);">97%</div><div style="font-size:0.85rem;color:var(--color-muted);margin-top:4px;">שביעות רצון</div></div></div>
+        <div class="card card-sm"><div class="stat-item"><div class="num" style="font-size:2rem;font-weight:800;color:var(--color-primary);">500ש'</div><div style="font-size:0.85rem;color:var(--color-muted);margin-top:4px;">הכשרה שנתית</div></div></div>
+      </div>
+
+      <!-- חברי צוות מובחרים -->
+      <h2 style="text-align:center;margin-bottom:32px;">חברי הצוות המובחרים</h2>
+      <div class="crew-grid">
+
+        <div class="crew-member">
+          <div class="crew-member-img" style="font-size:3rem;background:linear-gradient(135deg,#00B5C8,#4A9FE8);display:flex;align-items:center;justify-content:center;" aria-label="תמונת קפטן דוד כהן" role="img">
+            <span aria-hidden="true">👨‍✈️</span>
+          </div>
+          <div class="crew-member-info">
+            <div class="crew-member-name">קפטן דוד כהן</div>
+            <div class="crew-member-role">טייס ראשי · 22 שנה</div>
+            <p style="font-size:0.82rem;margin-top:6px;color:var(--color-muted);">לשעבר טייס חיל האוויר. מעל 18,000 שעות טיסה באירופה ובמזרח התיכון.</p>
+          </div>
+        </div>
+
+        <div class="crew-member">
+          <div class="crew-member-img" style="background:linear-gradient(135deg,#7ED321,#00B5C8);display:flex;align-items:center;justify-content:center;font-size:3rem;" aria-label="תמונת שרה מיטשל" role="img">
+            <span aria-hidden="true">👩‍✈️</span>
+          </div>
+          <div class="crew-member-info">
+            <div class="crew-member-name">שרה מיטשל</div>
+            <div class="crew-member-role">ראש שירותי הקבינה · 11 שנה</div>
+            <p style="font-size:0.82rem;margin-top:6px;color:var(--color-muted);">מנהיגת הכנסת אורחים פרס-זכייה. דוברת 4 שפות ברמה גבוהה.</p>
+          </div>
+        </div>
+
+        <div class="crew-member">
+          <div class="crew-member-img" style="background:linear-gradient(135deg,#4A9FE8,#7ED321);display:flex;align-items:center;justify-content:center;font-size:3rem;" aria-label="תמונת קצין טיסה ראן לוי" role="img">
+            <span aria-hidden="true">👨‍✈️</span>
+          </div>
+          <div class="crew-member-info">
+            <div class="crew-member-name">קצ"ט ראן לוי</div>
+            <div class="crew-member-role">קצין טיסה ראשון · 6 שנה</div>
+            <p style="font-size:0.82rem;margin-top:6px;color:var(--color-muted);">מתמחה במשפחת A320. בוגר מצטיין של תוכנית הקדטים שלנו.</p>
+          </div>
+        </div>
+
+        <div class="crew-member">
+          <div class="crew-member-img" style="background:linear-gradient(135deg,#E91E8C,#00B5C8);display:flex;align-items:center;justify-content:center;font-size:3rem;" aria-label="תמונת מאיה עזולאי" role="img">
+            <span aria-hidden="true">👩</span>
+          </div>
+          <div class="crew-member-info">
+            <div class="crew-member-name">מאיה עזולאי</div>
+            <div class="crew-member-role">דיילת בכירה · 8 שנה</div>
+            <p style="font-size:0.82rem;margin-top:6px;color:var(--color-muted);">אלופת חוויית הלקוח. נלהבת להפוך כל נסיעה לבלתי נשכחת.</p>
+          </div>
+        </div>
+
+        <div class="crew-member">
+          <div class="crew-member-img" style="background:linear-gradient(135deg,#FF9800,#E91E8C);display:flex;align-items:center;justify-content:center;font-size:3rem;" aria-label="תמונת חורחה סנטוס" role="img">
+            <span aria-hidden="true">👨</span>
+          </div>
+          <div class="crew-member-info">
+            <div class="crew-member-name">חורחה סנטוס</div>
+            <div class="crew-member-role">פורסר ראשי · 14 שנה</div>
+            <p style="font-size:0.82rem;margin-top:6px;color:var(--color-muted);">מומחה בניהול שירות בטיסה. שולט בספרדית, פורטוגזית ואנגלית.</p>
+          </div>
+        </div>
+
+        <div class="crew-member">
+          <div class="crew-member-img" style="background:linear-gradient(135deg,#00B5C8,#0D3D6B);display:flex;align-items:center;justify-content:center;font-size:3rem;" aria-label="תמונת נועה בן-דוד" role="img">
+            <span aria-hidden="true">👩</span>
+          </div>
+          <div class="crew-member-info">
+            <div class="crew-member-name">נועה בן-דוד</div>
+            <div class="crew-member-role">דיילת · 3 שנה</div>
+            <p style="font-size:0.82rem;margin-top:6px;color:var(--color-muted);">כוכבת עולה בצוות הקבינה שלנו. ידועה בחמימות ותשומת לב יוצאת דופן לפרטים.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- קריאה לפעולה - קריירה -->
+      <div class="card" style="text-align:center;max-width:560px;margin:0 auto;border:2px solid rgba(0,181,200,0.25);background:linear-gradient(135deg,rgba(0,181,200,0.04),rgba(74,159,232,0.04));">
+        <h3 style="margin-bottom:12px;">הצטרף לצוות שלנו</h3>
+        <p style="margin-bottom:24px;">האם אתה נלהב מתעופה ושירות יוצא דופן? אנחנו תמיד מחפשים אנשים מוכשרים להצטרף למשפחת VolAir.</p>
+        <a href="#" class="btn btn-primary">צפה במשרות פנויות</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <div class="logo-text">Vol<span>Air</span> Airlines</div>
+          <p>תעופה מודרנית ומשתלמת המחברת אתכם לערים היפות ביותר באירופה.</p>
+        </div>
+        <div class="footer-col">
+          <h5>הזמנה</h5>
+          <ul><li><a href="flights.html">חיפוש טיסות</a></li></ul>
+        </div>
+        <div class="footer-col">
+          <h5>החברה</h5>
+          <ul>
+            <li><a href="about.html">אודות</a></li>
+            <li><a href="crew.html">הצוות שלנו</a></li>
+            <li><a href="fleet.html">הצי שלנו</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>תמיכה</h5>
+          <ul>
+            <li><a href="#">מרכז עזרה</a></li>
+            <li><a href="#">צור קשר</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2025 VolAir Airlines. כל הזכויות שמורות.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>תשלום — VolAir Airlines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="payment-page">
+
+  <nav class="navbar" role="navigation" aria-label="ניווט ראשי">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <circle cx="16" cy="16" r="16" fill="#00B5C8" opacity="0.15"/>
+          <path d="M6 16 L26 10 L22 16 L26 22 Z" fill="#00B5C8"/>
+          <path d="M14 16 L10 20 L12 16 L10 12 Z" fill="#7ED321"/>
+        </svg>
+        <span>Vol<span>Air</span></span>
+      </a>
+      <button class="nav-toggle" aria-label="פתח/סגור תפריט" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">בית</a></li>
+        <li><a href="flights.html" class="btn-nav">הזמן טיסה</a></li>
+        <li><a href="crew.html">הצוות שלנו</a></li>
+        <li><a href="fleet.html">הצי שלנו</a></li>
+        <li><a href="about.html">אודות</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="progress-steps" role="list" aria-label="שלבי הזמנה">
+    <div class="step done"   role="listitem"><div class="step-dot">✓</div><div class="step-label">חיפוש</div></div>
+    <div class="step done"   role="listitem"><div class="step-dot">✓</div><div class="step-label">תוצאות</div></div>
+    <div class="step done"   role="listitem"><div class="step-dot">✓</div><div class="step-label">מושבים</div></div>
+    <div class="step done"   role="listitem"><div class="step-dot">✓</div><div class="step-label">סיכום</div></div>
+    <div class="step active" role="listitem"><div class="step-dot">5</div><div class="step-label">תשלום</div></div>
+    <div class="step"        role="listitem"><div class="step-dot">6</div><div class="step-label">אישור</div></div>
+  </div>
+
+  <div class="page-hero">
+    <div class="container">
+      <h1>תשלום מאובטח</h1>
+      <p>פרטי התשלום שלך מוצפנים לחלוטין</p>
+    </div>
+  </div>
+
+  <main>
+    <div class="container section">
+      <div style="display:grid;grid-template-columns:1fr 320px;gap:28px;align-items:start;max-width:900px;margin:0 auto;">
+
+        <!-- טופס תשלום -->
+        <div class="card">
+          <h3 style="margin-bottom:20px;">בחר אמצעי תשלום</h3>
+
+          <div class="payment-methods" role="radiogroup" aria-label="אמצעי תשלום">
+
+            <div class="payment-option selected" data-method="card" role="radio" aria-checked="true" tabindex="0">
+              <div class="payment-radio"></div>
+              <div class="payment-icon visa" aria-hidden="true">VISA</div>
+              <div>
+                <div class="payment-name">כרטיס אשראי / דביט</div>
+                <div class="payment-sub">Visa, Mastercard, Amex</div>
+              </div>
+            </div>
+
+            <div class="payment-option" data-method="paypal" role="radio" aria-checked="false" tabindex="0">
+              <div class="payment-radio"></div>
+              <div class="payment-icon pp" aria-hidden="true">PP</div>
+              <div>
+                <div class="payment-name">PayPal</div>
+                <div class="payment-sub">שלם עם יתרת PayPal שלך</div>
+              </div>
+            </div>
+
+            <div class="payment-option" data-method="apple" role="radio" aria-checked="false" tabindex="0">
+              <div class="payment-radio"></div>
+              <div class="payment-icon apple" aria-hidden="true" style="font-size:1rem;letter-spacing:-1px;"></div>
+              <div>
+                <div class="payment-name">Apple Pay / Google Pay</div>
+                <div class="payment-sub">תשלום מהיר ומאובטח</div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- טופס פרטי כרטיס -->
+          <div class="card-form visible" id="card-details" aria-label="פרטי כרטיס אשראי">
+            <div class="form-group">
+              <label class="form-label" for="card-name">שם בעל הכרטיס <span class="required">*</span></label>
+              <input id="card-name" class="form-control" type="text" placeholder="כפי שמופיע על הכרטיס" autocomplete="cc-name" dir="ltr" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="card-number">מספר כרטיס <span class="required">*</span></label>
+              <div class="card-number-wrap">
+                <input id="card-number" class="form-control" type="text" placeholder="0000 0000 0000 0000"
+                       autocomplete="cc-number" maxlength="19" inputmode="numeric" dir="ltr" />
+                <span class="card-type-icon" aria-hidden="true">VISA</span>
+              </div>
+            </div>
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label class="form-label" for="card-expiry">תאריך תפוגה <span class="required">*</span></label>
+                <input id="card-expiry" class="form-control" type="text" placeholder="MM / YY"
+                       autocomplete="cc-exp" maxlength="7" dir="ltr" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="card-cvv">CVV <span class="required">*</span></label>
+                <input id="card-cvv" class="form-control" type="text" placeholder="000"
+                       autocomplete="cc-csc" maxlength="4" inputmode="numeric" dir="ltr" />
+              </div>
+            </div>
+          </div>
+
+          <div id="paypal-notice" style="display:none;padding:20px;background:rgba(0,156,222,0.08);border-radius:12px;border:1px solid rgba(0,156,222,0.2);text-align:center;">
+            <p style="color:#007BB5;font-weight:600;">תועבר לאתר PayPal להשלמת התשלום בצורה מאובטחת.</p>
+          </div>
+
+          <div id="digital-notice" style="display:none;padding:20px;background:rgba(29,29,31,0.06);border-radius:12px;border:1px solid rgba(29,29,31,0.12);text-align:center;">
+            <p style="font-weight:600;">השתמש ב-Face ID, Touch ID או טביעת אצבע כדי להשלים את התשלום.</p>
+          </div>
+
+          <hr class="divider" />
+
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <button id="pay-btn" class="btn btn-secondary btn-lg btn-full" type="button">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>
+              </svg>
+              שלם עכשיו — <span id="pay-total">€0.00</span>
+            </button>
+            <button id="back-btn" class="btn btn-ghost btn-full" type="button">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+              חזרה לסיכום
+            </button>
+          </div>
+        </div>
+
+        <!-- סיכום הזמנה -->
+        <aside>
+          <div class="card card-sm">
+            <h4 style="margin-bottom:16px;">סיכום הזמנה</h4>
+            <div class="d-flex justify-between" style="padding:8px 0;border-bottom:1px solid var(--color-border);font-size:0.9rem;">
+              <span class="text-muted">טיסה</span>
+              <span class="font-bold" id="pay-flight">—</span>
+            </div>
+            <div class="d-flex justify-between" style="padding:8px 0;border-bottom:1px solid var(--color-border);font-size:0.9rem;">
+              <span class="text-muted">מושבים</span>
+              <span class="font-bold" id="pay-seats">—</span>
+            </div>
+            <div class="d-flex justify-between" style="padding:8px 0;border-bottom:1px solid var(--color-border);font-size:0.9rem;">
+              <span class="text-muted">תוספות</span>
+              <span class="font-bold" id="pay-extras">ללא</span>
+            </div>
+            <div class="d-flex justify-between" style="padding:12px 0 0;font-weight:800;font-size:1.1rem;">
+              <span>סה"כ</span>
+              <span style="color:var(--color-primary);" id="pay-total-side">€0.00</span>
+            </div>
+          </div>
+
+          <div class="card card-sm mt-4" style="border:1px solid rgba(67,160,71,0.25);background:rgba(67,160,71,0.04);">
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div class="d-flex align-center gap-2">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" stroke-width="2.5" aria-hidden="true">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                <span style="font-size:0.85rem;font-weight:600;color:var(--color-success);">מוצפן SSL</span>
+              </div>
+              <div class="d-flex align-center gap-2">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" stroke-width="2.5" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                <span style="font-size:0.85rem;color:var(--color-muted);">תואם PCI DSS</span>
+              </div>
+              <div class="d-flex align-center gap-2">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" stroke-width="2.5" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                <span style="font-size:0.85rem;color:var(--color-muted);">ביטול חינם תוך 24 שעות</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-bottom">
+        <span>&copy; 2025 VolAir Airlines</span>
+        <a href="index.html" style="color:rgba(255,255,255,0.45);">→ חזרה לדף הבית</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      try {
+        const s = JSON.parse(sessionStorage.getItem('volair_state') || '{}');
+        const setEl = (id, val) => { const el = document.getElementById(id); if(el) el.textContent = val; };
+        const hebrewExtras = { luggage: 'מזוודה', priority: 'עלייה מועדפת', drinks: 'משקאות' };
+        setEl('pay-flight', s.selectedFlight || '—');
+        setEl('pay-seats',  (s.selectedSeats||[]).join(', ') || '—');
+        const activeExtras = Object.entries(s.extras||{}).filter(([,v])=>v).map(([k])=>hebrewExtras[k]||k);
+        setEl('pay-extras', activeExtras.join(', ') || 'ללא');
+        const tot = '€' + (s.totalPrice||0).toFixed(2);
+        setEl('pay-total', tot);
+        setEl('pay-total-side', tot);
+        const payBtn = document.getElementById('pay-btn');
+        if (payBtn) payBtn.innerHTML = payBtn.innerHTML.replace('€0.00', tot);
+      } catch(e) {}
+
+      const cardInput = document.getElementById('card-number');
+      if (cardInput) {
+        cardInput.addEventListener('input', e => {
+          let v = e.target.value.replace(/\D/g, '').slice(0,16);
+          e.target.value = v.replace(/(.{4})/g,'$1 ').trim();
+        });
+      }
+
+      document.querySelectorAll('.payment-option').forEach(opt => {
+        opt.addEventListener('click', () => {
+          const method = opt.dataset.method;
+          const cardDetails = document.getElementById('card-details');
+          const ppNotice    = document.getElementById('paypal-notice');
+          const digNotice   = document.getElementById('digital-notice');
+          if (cardDetails) cardDetails.style.display = method === 'card'   ? '' : 'none';
+          if (ppNotice)    ppNotice.style.display    = method === 'paypal' ? '' : 'none';
+          if (digNotice)   digNotice.style.display   = method === 'apple'  ? '' : 'none';
+        });
+      });
+    });
+  </script>
+  <script src="js/app.js"></script>
+</body>
+</html>
