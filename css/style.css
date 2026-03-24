@@ -78,6 +78,27 @@ p  { line-height: 1.7; color: var(--color-muted); }
 
 .section { padding: 64px 0; }
 .section-sm { padding: 40px 0; }
+@media (max-width: 600px) {
+  .section    { padding: 40px 0; }
+  .section-sm { padding: 24px 0; }
+}
+
+/* Responsive utility grids */
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 600px) { .grid-4 { grid-template-columns: 1fr 1fr !important; } }
+
+.payment-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 28px;
+  align-items: start;
+  max-width: 900px;
+  margin: 0 auto;
+}
+@media (max-width: 768px) {
+  .payment-grid { grid-template-columns: 1fr; }
+  .payment-grid > *:last-child { order: -1; } /* sidebar goes first on mobile */
+}
 
 /* ── Navigation ────────────────────────────── */
 .navbar {
@@ -257,6 +278,13 @@ p  { line-height: 1.7; color: var(--color-muted); }
 }
 .step.active .step-label { color: var(--color-primary); font-weight: 600; }
 .step.done  .step-label { color: var(--color-secondary); }
+@media (max-width: 480px) {
+  .progress-steps { padding: 16px 8px; }
+  .step { min-width: 44px; }
+  .step-label { font-size: 0.6rem; }
+  .step-dot { width: 26px; height: 26px; font-size: 0.65rem; }
+  .step:not(:last-child)::after { top: 13px; }
+}
 
 /* ── Buttons ───────────────────────────────── */
 .btn {
@@ -465,6 +493,10 @@ p  { line-height: 1.7; color: var(--color-muted); }
 }
 .page-hero h1 { color: #fff; margin-bottom: 8px; }
 .page-hero p  { color: rgba(255,255,255,0.65); font-size: 1rem; }
+@media (max-width: 600px) {
+  .page-hero { padding: 32px 0 24px; }
+  .page-hero h1 { font-size: 1.75rem; }
+}
 
 /* ── Footer ─────────────────────────────────── */
 .footer {
