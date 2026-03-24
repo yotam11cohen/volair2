@@ -89,6 +89,7 @@
             <div class="form-group">
               <label class="form-label" for="card-name">שם בעל הכרטיס <span class="required">*</span></label>
               <input id="card-name" class="form-control" type="text" placeholder="כפי שמופיע על הכרטיס" autocomplete="cc-name" dir="ltr" />
+              <span class="form-error" id="card-name-error"></span>
             </div>
             <div class="form-group">
               <label class="form-label" for="card-number">מספר כרטיס <span class="required">*</span></label>
@@ -97,17 +98,20 @@
                        autocomplete="cc-number" maxlength="19" inputmode="numeric" dir="ltr" />
                 <span class="card-type-icon" aria-hidden="true">VISA</span>
               </div>
+              <span class="form-error" id="card-number-error"></span>
             </div>
             <div class="form-grid-2">
               <div class="form-group">
                 <label class="form-label" for="card-expiry">תאריך תפוגה <span class="required">*</span></label>
                 <input id="card-expiry" class="form-control" type="text" placeholder="MM / YY"
                        autocomplete="cc-exp" maxlength="7" dir="ltr" />
+                <span class="form-error" id="card-expiry-error"></span>
               </div>
               <div class="form-group">
                 <label class="form-label" for="card-cvv">CVV <span class="required">*</span></label>
                 <input id="card-cvv" class="form-control" type="text" placeholder="000"
                        autocomplete="cc-csc" maxlength="4" inputmode="numeric" dir="ltr" />
+                <span class="form-error" id="card-cvv-error"></span>
               </div>
             </div>
           </div>

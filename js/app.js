@@ -491,11 +491,11 @@ function initSummaryPage() {
       let valid = true;
 
       if (!emailInput.value || !emailInput.checkValidity()) {
-        showError(emailInput, 'נא להזין כתובת דוא"ל תקינה.');
+        showError(emailInput, 'נא להזין כתובת דוא"ל תקינה.', { focus: valid });
         valid = false;
       }
       if (!phoneInput.value) {
-        showError(phoneInput, 'נא להזין מספר טלפון.');
+        showError(phoneInput, 'נא להזין מספר טלפון.', { focus: valid });
         valid = false;
       }
 
@@ -547,12 +547,15 @@ function initPaymentPage() {
   if (payBtn) {
     payBtn.addEventListener('click', () => {
       if (STATE.paymentMethod === 'card') {
-        const cardNum = $('#card-number');
-        const expiry  = $('#card-expiry');
-        const cvv     = $('#card-cvv');
-        const name    = $('#card-name');
-        if (!cardNum?.value || !expiry?.value || !cvv?.value || !name?.value) {
-          showToast('נא למלא את כל פרטי כרטיס האשראי.', 'error');
+        const cardFields = [
+          { el: $('#card-name'),   msg: 'נא להזין שם בעל הכרטיס.' },
+          { el: $('#card-number'), msg: 'נא להזין מספר כרטיס.' },
+          { el: $('#card-expiry'), msg: 'נא להזין תאריך תפוגה.' },
+          { el: $('#card-cvv'),    msg: 'נא להזין קוד CVV.' },
+        ];
+        const invalid = cardFields.filter(f => !f.el?.value?.trim());
+        if (invalid.length) {
+          invalid.forEach((f, i) => showError(f.el, f.msg, { focus: i === 0 }));
           return;
         }
       }
@@ -659,14 +662,18 @@ function showToast(msg, type = 'info') {
   setTimeout(() => toast.remove(), 4000);
 }
 
-function showError(input, msg) {
+function showError(input, msg, { focus = true } = {}) {
   if (!input) return;
-  input.style.borderColor = 'var(--color-danger)';
-  input.focus();
-  const errEl = input.parentElement?.querySelector('.form-error');
+  input.classList.add('is-invalid');
+  input.classList.remove('shake');
+  void input.offsetWidth;
+  input.classList.add('shake');
+  if (focus) input.focus();
+  const errEl = input.closest('.form-group')?.querySelector('.form-error')
+             || input.parentElement?.querySelector('.form-error');
   if (errEl) { errEl.textContent = msg; errEl.classList.add('visible'); }
   input.addEventListener('input', () => {
-    input.style.borderColor = '';
+    input.classList.remove('is-invalid', 'shake');
     if (errEl) errEl.classList.remove('visible');
   }, { once: true });
 }
