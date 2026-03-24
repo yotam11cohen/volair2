@@ -79,6 +79,55 @@ function initNav() {
   });
 }
 
+// ── Entry animations ───────────────────────────
+function initAnimations() {
+  if (!('IntersectionObserver' in window)) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  // Stagger-animate direct children of these containers
+  const containerSelectors = [
+    '.crew-grid',
+    '.why-grid',
+    '.destinations-grid',
+    '.fleet-hero-images',
+    '.crew-hero-images',
+    '.fleet-spec-grid',
+    '.value-cards',
+  ];
+
+  const animEls = [];
+
+  containerSelectors.forEach(sel => {
+    $$(sel).forEach(container => {
+      Array.from(container.children).forEach((child, i) => {
+        child.style.setProperty('--anim-delay', `${i * 80}ms`);
+        child.classList.add('anim-ready');
+        animEls.push(child);
+      });
+    });
+  });
+
+  // Stat items (crew + fleet pages)
+  $$('.stat-item').forEach((el, i) => {
+    el.style.setProperty('--anim-delay', `${i * 60}ms`);
+    el.classList.add('anim-ready');
+    animEls.push(el);
+  });
+
+  if (!animEls.length) return;
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('anim-done');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
+
+  animEls.forEach(el => io.observe(el));
+}
+
 // ── FLIGHTS PAGE ───────────────────────────────
 function initFlightsPage() {
   if (!$('.flights-page')) return;
@@ -217,6 +266,15 @@ function initResultsPage() {
         </div>`;
       list.appendChild(card);
     });
+
+    // Stagger flight cards in
+    if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      requestAnimationFrame(() => {
+        $$('.flight-card', list).forEach((c, i) => {
+          c.style.animation = `fade-in-up 500ms cubic-bezier(0.22,1,0.36,1) ${i * 120}ms both`;
+        });
+      });
+    }
 
     // Select flight
     list.addEventListener('click', e => {
@@ -616,6 +674,7 @@ function showError(input, msg) {
 // ── Init ───────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   initNav();
+  initAnimations();
   initFlightsPage();
   initResultsPage();
   initSeatsPage();
