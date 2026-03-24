@@ -259,7 +259,12 @@ function initResultsPage() {
       .filter(([,v]) => v)
       .reduce((sum, [k]) => sum + (EXTRA_PRICES[k] || 0), 0);
     const totalEl = $('#extras-total');
-    if (totalEl) totalEl.textContent = formatPrice(basePrice + extraTotal);
+    if (totalEl) {
+      totalEl.textContent = formatPrice(basePrice + extraTotal);
+      totalEl.classList.remove('price-flash');
+      void totalEl.offsetWidth;
+      totalEl.classList.add('price-flash');
+    }
   }
 
   updateExtrasTotal();
