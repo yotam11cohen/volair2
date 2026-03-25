@@ -40,6 +40,24 @@
   --nav-height: 68px;
 }
 
+/* ── Skip link ──────────────────────────────── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-primary);
+  color: #fff;
+  padding: 10px 24px;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  font-weight: 600;
+  font-size: 0.95rem;
+  z-index: 10000;
+  transition: top 200ms ease;
+  white-space: nowrap;
+}
+.skip-link:focus { top: 0; outline: 3px solid #fff; outline-offset: -4px; }
+
 /* ── Reset & Base ──────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -276,7 +294,7 @@ p  { line-height: 1.7; color: var(--color-muted); }
   color: var(--color-muted);
   white-space: nowrap;
 }
-.step.active .step-label { color: var(--color-primary); font-weight: 600; }
+.step.active .step-label { color: var(--color-primary-dk); font-weight: 600; }
 .step.done  .step-label { color: var(--color-secondary); }
 @media (max-width: 480px) {
   .progress-steps { padding: 16px 8px; }
@@ -521,20 +539,20 @@ p  { line-height: 1.7; color: var(--color-muted); }
 .footer-brand { display: flex; flex-direction: column; gap: 12px; }
 .footer-brand .logo-text { color: #fff; font-size: 1.2rem; font-weight: 700; }
 .footer-brand .logo-text span { color: var(--color-primary); }
-.footer-brand p { font-size: 0.875rem; line-height: 1.6; color: rgba(255,255,255,0.45); }
+.footer-brand p { font-size: 0.875rem; line-height: 1.6; color: rgba(255,255,255,0.65); }
 
 .footer-col h5 {
   font-size: 0.8rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: rgba(255,255,255,0.35);
+  color: rgba(255,255,255,0.60);
   margin-bottom: 14px;
 }
 .footer-col ul { display: flex; flex-direction: column; gap: 8px; }
 .footer-col a {
   font-size: 0.9rem;
-  color: rgba(255,255,255,0.55);
+  color: rgba(255,255,255,0.75);
   transition: color var(--transition);
 }
 .footer-col a:hover { color: var(--color-primary); }
@@ -867,7 +885,7 @@ p  { line-height: 1.7; color: var(--color-muted); }
   padding: 4px 12px;
   border-radius: var(--radius-pill);
   background: var(--color-primary-lt);
-  color: var(--color-primary);
+  color: var(--color-primary-dk);
 }
 .flight-badge.best { background: rgba(126,211,33,0.15); color: var(--color-secondary-dk); }
 
@@ -1505,7 +1523,7 @@ p  { line-height: 1.7; color: var(--color-muted); }
   font-size: 0.75rem;
   font-weight: 700;
 }
-.badge-primary { background: var(--color-primary-lt); color: var(--color-primary); }
+.badge-primary { background: var(--color-primary-lt); color: var(--color-primary-dk); }
 .badge-success { background: rgba(67,160,71,0.12); color: var(--color-success); }
 .badge-warn    { background: rgba(251,140,0,0.12); color: var(--color-warning); }
 

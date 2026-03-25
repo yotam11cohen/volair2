@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add CLAUDE.md about.html confirmation.html crew.html fleet.html flights.html index.html payment.html results.html seats.html summary.html css/ js/ images/)",
+      "Bash(git commit:*)",
+      "Bash(git config user.name \"Yotam Cohen\")",
+      "Bash(git config user.email \"yotam11cohen@users.noreply.github.com\")",
+      "Bash(git branch -M main)",
+      "Bash(git push -u origin main)",
+      "Bash(git fetch origin)",
+      "Bash(git pull origin main --allow-unrelated-histories --no-edit)",
+      "Bash(git add images/logo.jpg)"
+    ]
+  }
+}

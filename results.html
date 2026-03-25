@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body class="results-page">
-
+  <a href="#main-content" class="skip-link">דלג לתוכן הראשי</a>
   <nav class="navbar" role="navigation" aria-label="ניווט ראשי">
     <div class="nav-inner">
       <a href="index.html" class="nav-logo">
@@ -45,7 +45,7 @@
     </div>
   </div>
 
-  <main>
+  <main id="main-content">
     <div class="container section">
       <div class="results-layout">
 
@@ -108,7 +108,7 @@
             <hr class="divider" />
             <div class="d-flex justify-between align-center">
               <span class="font-bold">סה"כ משוער</span>
-              <span class="font-bold" id="extras-total" style="color:var(--color-primary);font-size:1.2rem;">€—</span>
+              <span class="font-bold" id="extras-total" style="color:var(--color-primary);font-size:1.2rem;" aria-live="polite" aria-atomic="true">€—</span>
             </div>
             <p class="text-muted" style="font-size:0.75rem;margin-top:6px;">לנוסע · כולל מסים</p>
           </div>
