@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ניהול הזמנה — VolAir Airlines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .manage-wrap {
+      max-width: 540px; margin: 0 auto;
+    }
+    .manage-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 40px 36px;
+      box-shadow: var(--shadow-md);
+    }
+    .manage-card h2 { margin-bottom: 8px; }
+    .manage-card .sub { color: var(--color-text-muted); margin-bottom: 32px; font-size: 0.95rem; }
+
+    .booking-result {
+      display: none;
+      margin-top: 32px; border-top: 1px solid var(--color-border); padding-top: 28px;
+    }
+    .booking-result.visible { display: block; }
+    .result-header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 20px; flex-wrap: wrap; gap: 12px;
+    }
+    .result-ref { font-size: 1.5rem; font-weight: 800; color: var(--color-primary); letter-spacing: .04em; }
+    .result-status {
+      background: rgba(126,211,33,.15); color: var(--color-secondary-dk);
+      border: 1px solid var(--color-secondary); border-radius: 20px;
+      padding: 4px 14px; font-size: 0.82rem; font-weight: 600;
+    }
+    .result-rows { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+    .result-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 12px 14px; background: var(--color-bg);
+      border-radius: var(--radius-sm); font-size: 0.92rem;
+    }
+    .result-row .lbl { color: var(--color-text-muted); }
+    .result-row .val { font-weight: 600; }
+    .result-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .result-actions .btn { flex: 1; min-width: 120px; text-align: center; }
+
+    .no-result {
+      display: none; text-align: center; padding: 28px 0;
+      color: var(--color-text-muted);
+    }
+    .no-result.visible { display: block; }
+    .no-result svg { margin-bottom: 12px; color: var(--color-danger); }
+
+    .quick-access { margin-top: 28px; }
+    .quick-access h4 { font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: 14px; font-weight: 600; }
+    .quick-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .quick-tile {
+      border: 1px solid var(--color-border); border-radius: var(--radius-md);
+      padding: 16px; cursor: pointer; background: var(--color-surface);
+      transition: border-color 200ms, box-shadow 200ms;
+      display: flex; align-items: center; gap: 12px;
+      font-size: 0.88rem; font-weight: 600; color: var(--color-text);
+      text-decoration: none;
+    }
+    .quick-tile:hover { border-color: var(--color-primary); box-shadow: var(--shadow-md); color: var(--color-primary); }
+    .quick-tile svg { flex-shrink: 0; color: var(--color-primary); }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">דלג לתוכן הראשי</a>
+
+  <nav class="navbar" role="navigation" aria-label="ניווט ראשי">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo.jpg" alt="" width="36" height="36" />
+        <span>Vol<span>Air</span></span>
+      </a>
+      <button class="nav-toggle" aria-label="פתח/סגור תפריט" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">בית</a></li>
+        <li><a href="flights.html" class="btn-nav">הזמן טיסה</a></li>
+        <li><a href="crew.html">הצוות שלנו</a></li>
+        <li><a href="fleet.html">הצי שלנו</a></li>
+        <li><a href="about.html">אודות</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="page-hero">
+    <div class="container">
+      <h1>ניהול הזמנה</h1>
+      <p>בדיקת פרטי טיסה, צ'ק-אין מקוון ושינויים להזמנה</p>
+    </div>
+  </div>
+
+  <main id="main-content">
+    <section class="section" style="background:var(--color-surface);">
+      <div class="container">
+        <div class="manage-wrap">
+
+          <div class="manage-card">
+            <h2>חיפוש הזמנה</h2>
+            <p class="sub">הזינו את מספר ההזמנה ואת האימייל שהשתמשתם בהזמנה</p>
+
+            <form id="manage-form" novalidate>
+              <div class="form-group">
+                <label class="form-label" for="booking-ref">מספר הזמנה</label>
+                <input class="form-control" id="booking-ref" type="text"
+                       placeholder="לדוגמה: VA3F8K2X"
+                       autocomplete="off" spellcheck="false"
+                       style="text-transform:uppercase;letter-spacing:.08em;" />
+                <span class="form-error" id="ref-error"></span>
+              </div>
+              <div class="form-group" style="margin-top:20px;">
+                <label class="form-label" for="booking-email">כתובת אימייל</label>
+                <input class="form-control" id="booking-email" type="email"
+                       placeholder="כתובת האימייל מההזמנה" autocomplete="email" />
+                <span class="form-error" id="email-error"></span>
+              </div>
+              <button type="submit" class="btn btn-primary btn-lg" style="width:100%;margin-top:24px;">
+                חפש הזמנה
+              </button>
+            </form>
+
+            <!-- תוצאת הזמנה -->
+            <div class="booking-result" id="booking-result" aria-live="polite">
+              <div class="result-header">
+                <div>
+                  <div style="font-size:0.8rem;color:var(--color-text-muted);margin-bottom:4px;">מספר הזמנה</div>
+                  <div class="result-ref" id="res-ref">—</div>
+                </div>
+                <div class="result-status">מאושרת ✓</div>
+              </div>
+              <div class="result-rows">
+                <div class="result-row"><span class="lbl">טיסה</span><span class="val" id="res-flight">—</span></div>
+                <div class="result-row"><span class="lbl">תאריך</span><span class="val" id="res-date">—</span></div>
+                <div class="result-row"><span class="lbl">יעד</span><span class="val" id="res-dest">—</span></div>
+                <div class="result-row"><span class="lbl">מושבים</span><span class="val" id="res-seats">—</span></div>
+                <div class="result-row"><span class="lbl">נוסעים</span><span class="val" id="res-pax">—</span></div>
+                <div class="result-row"><span class="lbl">סה"כ שולם</span><span class="val" id="res-total">—</span></div>
+              </div>
+              <div class="result-actions">
+                <button class="btn btn-outline" onclick="window.print()">הדפס</button>
+                <button class="btn btn-primary" id="checkin-btn">צ'ק-אין מקוון</button>
+              </div>
+            </div>
+
+            <!-- לא נמצא -->
+            <div class="no-result" id="no-result">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+              <p style="font-weight:600;margin-bottom:6px;">ההזמנה לא נמצאה</p>
+              <p style="font-size:0.9rem;">בדקו את מספר ההזמנה ואת האימייל ונסו שוב.<br/>לעזרה נוספת — <a href="contact.html">צרו קשר</a>.</p>
+            </div>
+
+            <!-- גישה מהירה -->
+            <div class="quick-access">
+              <h4>פעולות נפוצות</h4>
+              <div class="quick-tiles">
+                <a href="flights.html" class="quick-tile">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8 8a16 16 0 0 0 6 6l.86-.86a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 15.4z"/></svg>
+                  הזמן טיסה חדשה
+                </a>
+                <a href="help.html" class="quick-tile">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><circle cx="12" cy="17" r=".5" fill="currentColor"/></svg>
+                  מרכז עזרה
+                </a>
+                <a href="contact.html" class="quick-tile">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                  צור קשר
+                </a>
+                <a href="help.html#cancel" class="quick-tile">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                  מדיניות ביטול
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <div class="logo-text">Vol<span>Air</span> Airlines</div>
+          <p>תעופה מודרנית ומשתלמת המחברת אתכם לערים היפות ביותר באירופה. מטיסים גבוה יותר מאז 2010.</p>
+        </div>
+        <div class="footer-col">
+          <h5>הזמנה</h5>
+          <ul>
+            <li><a href="flights.html">חיפוש טיסות</a></li>
+            <li><a href="manage.html" aria-current="page">ניהול הזמנה</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>החברה</h5>
+          <ul>
+            <li><a href="about.html">אודות</a></li>
+            <li><a href="crew.html">הצוות שלנו</a></li>
+            <li><a href="fleet.html">הצי שלנו</a></li>
+            <li><a href="careers.html">קריירה</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>תמיכה</h5>
+          <ul>
+            <li><a href="help.html">מרכז עזרה</a></li>
+            <li><a href="contact.html">צור קשר</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2025 VolAir Airlines. כל הזכויות שמורות.</span>
+        <span>עוצב באהבה ✦ תל אביב</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script>
+    const DEST_NAMES = { BCN: 'ברצלונה', MAD: 'מדריד', AMS: 'אמסטרדם', LHR: 'לונדון', CDG: 'פריז', FCO: 'רומא' };
+    const FLIGHT_NAMES = { VA101: 'VA101 — תל אביב → ברצלונה', VA203: 'VA203 — תל אביב → מדריד', VA315: 'VA315 — תל אביב → אמסטרדם' };
+
+    function formatDate(iso) {
+      if (!iso) return '—';
+      const d = new Date(iso);
+      return d.toLocaleDateString('he-IL', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+    }
+
+    document.getElementById('manage-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const refInput = document.getElementById('booking-ref');
+      const emailInput = document.getElementById('booking-email');
+      const refErr = document.getElementById('ref-error');
+      const emailErr = document.getElementById('email-error');
+      let valid = true;
+
+      // clear previous
+      [refInput, emailInput].forEach(i => i.classList.remove('is-invalid', 'is-valid'));
+      [refErr, emailErr].forEach(e => e.classList.remove('visible'));
+      document.getElementById('booking-result').classList.remove('visible');
+      document.getElementById('no-result').classList.remove('visible');
+
+      const ref = refInput.value.trim().toUpperCase();
+      const email = emailInput.value.trim();
+
+      if (!ref) {
+        refInput.classList.add('is-invalid'); refErr.textContent = 'נא להזין מספר הזמנה.'; refErr.classList.add('visible'); valid = false;
+      }
+      if (!email || !email.includes('@')) {
+        emailInput.classList.add('is-invalid'); emailErr.textContent = 'נא להזין כתובת אימייל תקינה.'; emailErr.classList.add('visible'); valid = false;
+      }
+      if (!valid) return;
+
+      // Try to load from sessionStorage
+      const saved = sessionStorage.getItem('volairState');
+      let found = false;
+      if (saved) {
+        try {
+          const s = JSON.parse(saved);
+          if (s.bookingRef && s.bookingRef.toUpperCase() === ref && s.contact?.email?.toLowerCase() === email.toLowerCase()) {
+            found = true;
+            document.getElementById('res-ref').textContent = s.bookingRef;
+            document.getElementById('res-flight').textContent = FLIGHT_NAMES[s.selectedFlight] || s.selectedFlight || '—';
+            document.getElementById('res-date').textContent = formatDate(s.departure);
+            document.getElementById('res-dest').textContent = s.destination ? (DEST_NAMES[s.destination] || s.destination) : '—';
+            document.getElementById('res-seats').textContent = Array.isArray(s.selectedSeats) ? s.selectedSeats.join(', ') : '—';
+            const pax = s.passengers ? (s.passengers.adults||0)+(s.passengers.teens||0)+(s.passengers.children||0) : '—';
+            document.getElementById('res-pax').textContent = pax;
+            document.getElementById('res-total').textContent = s.totalPrice ? `€${Number(s.totalPrice).toFixed(2)}` : '—';
+            document.getElementById('booking-result').classList.add('visible');
+            refInput.classList.add('is-valid'); emailInput.classList.add('is-valid');
+          }
+        } catch(_) {}
+      }
+
+      if (!found) {
+        document.getElementById('no-result').classList.add('visible');
+        refInput.classList.add('is-invalid'); emailInput.classList.add('is-invalid');
+      }
+    });
+
+    // auto-fill from last booking if coming from confirmation
+    (function() {
+      const saved = sessionStorage.getItem('volairState');
+      if (!saved) return;
+      try {
+        const s = JSON.parse(saved);
+        if (s.bookingRef) document.getElementById('booking-ref').value = s.bookingRef;
+        if (s.contact?.email) document.getElementById('booking-email').value = s.contact.email;
+      } catch(_) {}
+    })();
+
+    document.getElementById('checkin-btn').addEventListener('click', function() {
+      showToast('צ\'ק-אין מקוון הושלם! ארטיית הטיסה נשלחה לאימייל שלך.', 'success');
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>צור קשר — VolAir Airlines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 36px;
+      align-items: start;
+      max-width: 920px;
+      margin: 0 auto;
+    }
+    @media (max-width: 768px) {
+      .contact-grid { grid-template-columns: 1fr; }
+      .contact-grid > *:last-child { order: -1; }
+    }
+
+    .contact-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 36px 32px;
+      box-shadow: var(--shadow-md);
+    }
+    .contact-card h2 { margin-bottom: 8px; }
+    .contact-card .sub { color: var(--color-text-muted); margin-bottom: 28px; font-size: 0.95rem; }
+
+    .contact-info-card {
+      background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dk));
+      color: #fff;
+      border-radius: var(--radius-lg);
+      padding: 32px 28px;
+    }
+    .contact-info-card h3 { color: #fff; margin-bottom: 24px; }
+    .info-item {
+      display: flex; gap: 14px; align-items: flex-start;
+      margin-bottom: 22px;
+    }
+    .info-item:last-child { margin-bottom: 0; }
+    .info-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: rgba(255,255,255,.2);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .info-item strong { display: block; font-size: 0.92rem; margin-bottom: 3px; }
+    .info-item span { font-size: 0.88rem; opacity: .85; line-height: 1.5; }
+
+    .hours-row { display: flex; justify-content: space-between; font-size: 0.85rem; padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.15); }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-row .day { opacity: .75; }
+    .hours-row .time { font-weight: 600; }
+
+    .success-state {
+      display: none; text-align: center; padding: 40px 20px;
+    }
+    .success-state.visible { display: block; }
+    .success-icon {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: rgba(126,211,33,.15); border: 2px solid var(--color-secondary);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px; color: var(--color-secondary-dk);
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">דלג לתוכן הראשי</a>
+
+  <nav class="navbar" role="navigation" aria-label="ניווט ראשי">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo.jpg" alt="" width="36" height="36" />
+        <span>Vol<span>Air</span></span>
+      </a>
+      <button class="nav-toggle" aria-label="פתח/סגור תפריט" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">בית</a></li>
+        <li><a href="flights.html" class="btn-nav">הזמן טיסה</a></li>
+        <li><a href="crew.html">הצוות שלנו</a></li>
+        <li><a href="fleet.html">הצי שלנו</a></li>
+        <li><a href="about.html">אודות</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="page-hero">
+    <div class="container">
+      <h1>צור קשר</h1>
+      <p>אנחנו כאן לעזור — נחזור אליכם תוך שעה בשעות הפעילות</p>
+    </div>
+  </div>
+
+  <main id="main-content">
+    <section class="section" style="background:var(--color-surface);">
+      <div class="container">
+        <div class="contact-grid">
+
+          <!-- טופס -->
+          <div class="contact-card">
+            <h2>שלחו לנו הודעה</h2>
+            <p class="sub">נחזור אליכם תוך שעה בשעות הפעילות</p>
+
+            <form id="contact-form" novalidate>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                <div class="form-group">
+                  <label class="form-label" for="c-name">שם מלא *</label>
+                  <input class="form-control" id="c-name" type="text" placeholder="ישראל ישראלי" autocomplete="name" />
+                  <span class="form-error" id="e-name"></span>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="c-email">אימייל *</label>
+                  <input class="form-control" id="c-email" type="email" placeholder="your@email.com" autocomplete="email" />
+                  <span class="form-error" id="e-email"></span>
+                </div>
+              </div>
+
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;">
+                <div class="form-group">
+                  <label class="form-label" for="c-phone">טלפון</label>
+                  <input class="form-control" id="c-phone" type="tel" placeholder="+972 50-000-0000" autocomplete="tel" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="c-booking">מספר הזמנה</label>
+                  <input class="form-control" id="c-booking" type="text" placeholder="VA3F8K2X (אופציונלי)"
+                         style="text-transform:uppercase;" />
+                </div>
+              </div>
+
+              <div class="form-group" style="margin-top:16px;">
+                <label class="form-label" for="c-subject">נושא *</label>
+                <select class="form-control" id="c-subject">
+                  <option value="">בחר נושא…</option>
+                  <option value="cancel">ביטול או שינוי הזמנה</option>
+                  <option value="refund">החזר כספי</option>
+                  <option value="baggage">כבודה</option>
+                  <option value="checkin">צ'ק-אין</option>
+                  <option value="complaint">תלונה</option>
+                  <option value="compliment">מחמאה</option>
+                  <option value="other">אחר</option>
+                </select>
+                <span class="form-error" id="e-subject"></span>
+              </div>
+
+              <div class="form-group" style="margin-top:16px;">
+                <label class="form-label" for="c-msg">הודעה *</label>
+                <textarea class="form-control" id="c-msg" rows="5"
+                          placeholder="ספרו לנו במה נוכל לעזור…"
+                          style="resize:vertical;min-height:120px;"></textarea>
+                <span class="form-error" id="e-msg"></span>
+              </div>
+
+              <div id="form-area">
+                <button type="submit" class="btn btn-primary btn-lg" style="width:100%;margin-top:24px;">
+                  שלח הודעה
+                </button>
+              </div>
+            </form>
+
+            <div class="success-state" id="success-state">
+              <div class="success-icon" aria-hidden="true">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <h3 style="margin-bottom:10px;">ההודעה נשלחה!</h3>
+              <p style="color:var(--color-text-muted);margin-bottom:24px;">
+                תודה שפנית אלינו. נחזור אליך לכתובת <strong id="confirm-email"></strong><br/>תוך שעה בשעות הפעילות.
+              </p>
+              <button class="btn btn-outline" onclick="resetForm()">שלח הודעה נוספת</button>
+            </div>
+          </div>
+
+          <!-- פרטי קשר -->
+          <div>
+            <div class="contact-info-card">
+              <h3>פרטי יצירת קשר</h3>
+
+              <div class="info-item">
+                <div class="info-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8 8a16 16 0 0 0 6 6l.86-.86a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 15.4z"/></svg>
+                </div>
+                <div>
+                  <strong>טלפון</strong>
+                  <span>1-800-VOLAIR (864-547)<br/>זמין 08:00–22:00 בכל ימות השבוע</span>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <div class="info-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </div>
+                <div>
+                  <strong>אימייל</strong>
+                  <span>support@volair.co.il<br/>תגובה תוך שעה</span>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <div class="info-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                </div>
+                <div>
+                  <strong>משרד ראשי</strong>
+                  <span>רוטשילד 22, תל אביב 6688218<br/>קומה 8</span>
+                </div>
+              </div>
+
+              <div style="margin-top:24px;padding-top:20px;border-top:1px solid rgba(255,255,255,.2);">
+                <strong style="display:block;margin-bottom:12px;font-size:0.88rem;">שעות פעילות מוקד שירות</strong>
+                <div class="hours-row"><span class="day">ראשון–חמישי</span><span class="time">08:00–22:00</span></div>
+                <div class="hours-row"><span class="day">שישי</span><span class="time">08:00–15:00</span></div>
+                <div class="hours-row"><span class="day">שבת ומועדים</span><span class="time">10:00–20:00</span></div>
+              </div>
+            </div>
+
+            <div class="card" style="margin-top:20px;padding:20px 18px;">
+              <div style="display:flex;gap:12px;align-items:flex-start;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" style="flex-shrink:0;margin-top:2px;" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                <div>
+                  <strong style="display:block;margin-bottom:4px;font-size:0.9rem;">תשובה מהירה?</strong>
+                  <p style="font-size:0.85rem;color:var(--color-text-muted);margin-bottom:12px;">לשאלות נפוצות — בדקו את <a href="help.html">מרכז העזרה</a> שלנו לפני שליחת הטופס.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <div class="logo-text">Vol<span>Air</span> Airlines</div>
+          <p>תעופה מודרנית ומשתלמת המחברת אתכם לערים היפות ביותר באירופה. מטיסים גבוה יותר מאז 2010.</p>
+        </div>
+        <div class="footer-col">
+          <h5>הזמנה</h5>
+          <ul>
+            <li><a href="flights.html">חיפוש טיסות</a></li>
+            <li><a href="manage.html">ניהול הזמנה</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>החברה</h5>
+          <ul>
+            <li><a href="about.html">אודות</a></li>
+            <li><a href="crew.html">הצוות שלנו</a></li>
+            <li><a href="fleet.html">הצי שלנו</a></li>
+            <li><a href="careers.html">קריירה</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>תמיכה</h5>
+          <ul>
+            <li><a href="help.html">מרכז עזרה</a></li>
+            <li><a href="contact.html" aria-current="page">צור קשר</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2025 VolAir Airlines. כל הזכויות שמורות.</span>
+        <span>עוצב באהבה ✦ תל אביב</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script>
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const fields = [
+        { el: document.getElementById('c-name'),    err: document.getElementById('e-name'),    msg: 'נא להזין שם מלא.' },
+        { el: document.getElementById('c-email'),   err: document.getElementById('e-email'),   msg: 'נא להזין כתובת אימייל תקינה.', validate: v => v.includes('@') },
+        { el: document.getElementById('c-subject'), err: document.getElementById('e-subject'), msg: 'נא לבחור נושא.' },
+        { el: document.getElementById('c-msg'),     err: document.getElementById('e-msg'),     msg: 'נא לכתוב הודעה.' },
+      ];
+
+      // clear
+      fields.forEach(f => { f.el.classList.remove('is-invalid','is-valid'); f.err.classList.remove('visible'); });
+
+      let firstInvalid = null;
+      fields.forEach(f => {
+        const v = f.el.value.trim();
+        const ok = v && (f.validate ? f.validate(v) : true);
+        if (!ok) {
+          f.el.classList.add('is-invalid'); f.err.textContent = f.msg; f.err.classList.add('visible');
+          if (!firstInvalid) firstInvalid = f.el;
+        } else {
+          f.el.classList.add('is-valid');
+        }
+      });
+
+      if (firstInvalid) { firstInvalid.focus(); return; }
+
+      // success
+      const email = document.getElementById('c-email').value.trim();
+      document.getElementById('confirm-email').textContent = email;
+      document.getElementById('contact-form').style.display = 'none';
+      document.getElementById('success-state').classList.add('visible');
+    });
+
+    function resetForm() {
+      document.getElementById('contact-form').reset();
+      document.querySelectorAll('#contact-form .form-control').forEach(el => el.classList.remove('is-valid','is-invalid'));
+      document.querySelectorAll('#contact-form .form-error').forEach(el => el.classList.remove('visible'));
+      document.getElementById('contact-form').style.display = '';
+      document.getElementById('success-state').classList.remove('visible');
+    }
+  </script>
+</body>
+</html>
