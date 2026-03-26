@@ -49,14 +49,14 @@
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
           <path d="M3.5 18.5l7.5-7.5 4 4 7.5-9"/>
         </svg>
-        חברת התעופה התקציבית האהובה באירופה
+        <span data-i18n="home.hero.eyebrow">חברת התעופה התקציבית האהובה באירופה</span>
       </div>
 
       <h1 class="hero-title">
-        טוס חכם יותר.<br>
-        <span class="brand-color">חיה</span> <span class="accent-color">טוב יותר.</span>
+        <span data-i18n="home.hero.h1a">טוס חכם יותר.</span><br>
+        <span class="brand-color" data-i18n="home.hero.h1b">חיה</span> <span class="accent-color" data-i18n="home.hero.h1c">טוב יותר.</span>
       </h1>
-      <p class="hero-slogan">״השמיים הם לא הגבול — הם הבית שלך.״</p>
+      <p class="hero-slogan" data-i18n="home.hero.slogan">״השמיים הם לא הגבול — הם הבית שלך.״</p>
 
       <!-- תמונת מטוס עם fallback SVG -->
       <div class="hero-plane" aria-hidden="true">
@@ -101,13 +101,13 @@
         </svg>
         <div>
           <div class="brand-name">Vol<span>Air</span> Airlines</div>
-          <div class="brand-tagline">מטיסים אותך רחוק יותר מאז 2010</div>
+          <div class="brand-tagline" data-i18n="home.brand.tagline">מטיסים אותך רחוק יותר מאז 2010</div>
         </div>
       </div>
 
       <div class="btn-group" style="justify-content:center;">
-        <a href="flights.html" class="btn btn-primary btn-lg">הזמן טיסה</a>
-        <a href="about.html"   class="btn btn-outline btn-lg" style="color:#fff;border-color:rgba(255,255,255,0.4);">קרא עוד</a>
+        <a href="flights.html" class="btn btn-primary btn-lg" data-i18n="home.hero.cta">הזמן טיסה</a>
+        <a href="about.html"   class="btn btn-outline btn-lg" style="color:#fff;border-color:rgba(255,255,255,0.4);" data-i18n="home.hero.cta2">קרא עוד</a>
       </div>
     </div>
   </header>
@@ -116,8 +116,8 @@
     <!-- ── יעדים ── -->
     <section class="destinations" aria-labelledby="dest-heading">
       <div class="container">
-        <h2 id="dest-heading">יעדים פופולריים</h2>
-        <p class="section-subtitle">לחץ על יעד כלשהו כדי להתחיל להזמין את ההרפתקה הבאה שלך</p>
+        <h2 id="dest-heading" data-i18n="home.dest.h2">יעדים פופולריים</h2>
+        <p class="section-subtitle" data-i18n="home.dest.sub">לחץ על יעד כלשהו כדי להתחיל להזמין את ההרפתקה הבאה שלך</p>
 
         <div class="destinations-grid">
 
@@ -130,8 +130,8 @@
                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
             <div class="dest-card-placeholder" style="display:none;background:linear-gradient(160deg,#C0392B,#E74C3C,#F39C12);"></div>
             <div class="dest-card-overlay">
-              <div class="dest-city">ברצלונה</div>
-              <div class="dest-country">ספרד</div>
+<div class="dest-city" data-i18n="home.dest.bcn.city">ברצלונה</div>
+<div class="dest-country" data-i18n="home.dest.bcn.country">ספרד</div>
               <div class="dest-price">מ-<strong>€79</strong></div>
             </div>
           </a>
@@ -145,8 +145,8 @@
                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
             <div class="dest-card-placeholder" style="display:none;background:linear-gradient(160deg,#1565A8,#1E88E5,#00B5C8);"></div>
             <div class="dest-card-overlay">
-              <div class="dest-city">ליסבון</div>
-              <div class="dest-country">פורטוגל</div>
+<div class="dest-city" data-i18n="home.dest.lis.city">ליסבון</div>
+<div class="dest-country" data-i18n="home.dest.lis.country">פורטוגל</div>
               <div class="dest-price">מ-<strong>€65</strong></div>
             </div>
           </a>
@@ -160,8 +160,8 @@
                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
             <div class="dest-card-placeholder" style="display:none;background:linear-gradient(160deg,#6A1B9A,#8E24AA,#E91E63);"></div>
             <div class="dest-card-overlay">
-              <div class="dest-city">רומא</div>
-              <div class="dest-country">איטליה</div>
+<div class="dest-city" data-i18n="home.dest.fco.city">רומא</div>
+<div class="dest-country" data-i18n="home.dest.fco.country">איטליה</div>
               <div class="dest-price">מ-<strong>€89</strong></div>
             </div>
           </a>
@@ -175,8 +175,8 @@
                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
             <div class="dest-card-placeholder" style="display:none;background:linear-gradient(160deg,#004D40,#00897B,#7ED321);"></div>
             <div class="dest-card-overlay">
-              <div class="dest-city">פראג</div>
-              <div class="dest-country">צ'כיה</div>
+<div class="dest-city" data-i18n="home.dest.prg.city">פראג</div>
+<div class="dest-country" data-i18n="home.dest.prg.country">צ'כיה</div>
               <div class="dest-price">מ-<strong>€72</strong></div>
             </div>
           </a>
@@ -188,7 +188,7 @@
     <!-- ── למה VolAir ── -->
     <section class="why-fly" aria-labelledby="why-heading">
       <div class="container">
-        <h2 id="why-heading">למה לטוס איתנו?</h2>
+        <h2 id="why-heading" data-i18n="home.why.h2">למה לטוס איתנו?</h2>
         <div class="why-grid">
 
           <div class="why-item">
@@ -197,8 +197,8 @@
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
               </svg>
             </div>
-            <h3>בטוח ואמין</h3>
-            <p>הצי המודרני שלנו וצוות המיומן ביותר מבטיחים שכל טיסה עומדת בתקני הבטיחות הגבוהים ביותר בתעשייה.</p>
+<h3 data-i18n="home.why.1.h3">בטוח ואמין</h3>
+<p data-i18n="home.why.1.p">הצי המודרני שלנו וצוות המיומן ביותר מבטיחים שכל טיסה עומדת בתקני הבטיחות הגבוהים ביותר בתעשייה.</p>
           </div>
 
           <div class="why-item">
@@ -208,8 +208,8 @@
                 <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
               </svg>
             </div>
-            <h3>ערובת המחיר הטוב ביותר</h3>
-            <p>אנחנו מציעים מחירים תחרותיים ללא עמלות נסתרות. מצאת מחיר נמוך יותר? נשווה אותו.</p>
+<h3 data-i18n="home.why.2.h3">ערובת המחיר הטוב ביותר</h3>
+<p data-i18n="home.why.2.p">אנחנו מציעים מחירים תחרותיים ללא עמלות נסתרות. מצאת מחיר נמוך יותר? נשווה אותו.</p>
           </div>
 
           <div class="why-item">
@@ -219,8 +219,8 @@
                 <polyline points="12 6 12 12 16 14"/>
               </svg>
             </div>
-            <h3>דייקנות בלוח הזמנים</h3>
-            <p>97% יציאות בזמן ב-2024. אנחנו מכבדים את הזמן שלך ועושים כל מאמץ לשמור על לוח הזמנים.</p>
+<h3 data-i18n="home.why.3.h3">דייקנות בלוח הזמנים</h3>
+<p data-i18n="home.why.3.p">97% יציאות בזמן ב-2024. אנחנו מכבדים את הזמן שלך ועושים כל מאמץ לשמור על לוח הזמנים.</p>
           </div>
 
         </div>
@@ -234,22 +234,22 @@
       <div class="footer-inner">
         <div class="footer-brand">
           <div class="logo-text">Vol<span>Air</span> Airlines</div>
-          <p>תעופה מודרנית ומשתלמת המחברת אתכם לערים היפות ביותר באירופה. מטיסים גבוה יותר מאז 2010.</p>
+          <p data-i18n="footer.brandText">תעופה מודרנית ומשתלמת המחברת אתכם לערים היפות ביותר באירופה. מטיסים גבוה יותר מאז 2010.</p>
         </div>
         <div class="footer-col">
           <h5 data-i18n="footer.booking">הזמנה</h5>
           <ul>
-            <li><a href="flights.html">חיפוש טיסות</a></li>
-            <li><a href="flights.html">הלוך ושוב</a></li>
-            <li><a href="flights.html">כיוון אחד</a></li>
+            <li><a href="flights.html" data-i18n="footer.searchFlights">חיפוש טיסות</a></li>
+            <li><a href="flights.html" data-i18n="flights.trip.return">הלוך ושוב</a></li>
+            <li><a href="flights.html" data-i18n="flights.trip.oneway">כיוון אחד</a></li>
           </ul>
         </div>
         <div class="footer-col">
           <h5 data-i18n="footer.company">החברה</h5>
           <ul>
-            <li><a href="about.html">אודות</a></li>
-            <li><a href="crew.html">הצוות שלנו</a></li>
-            <li><a href="fleet.html">הצי שלנו</a></li>
+            <li><a href="about.html" data-i18n="nav.about">אודות</a></li>
+            <li><a href="crew.html" data-i18n="nav.crew">הצוות שלנו</a></li>
+            <li><a href="fleet.html" data-i18n="nav.fleet">הצי שלנו</a></li>
           </ul>
         </div>
         <div class="footer-col">

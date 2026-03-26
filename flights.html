@@ -37,19 +37,19 @@
 
   <!-- ── שלבי הזמנה ── -->
   <div class="progress-steps" role="list" aria-label="שלבי הזמנה">
-    <div class="step active" role="listitem"><div class="step-dot">1</div><div class="step-label">חיפוש</div></div>
-    <div class="step"        role="listitem"><div class="step-dot">2</div><div class="step-label">תוצאות</div></div>
-    <div class="step"        role="listitem"><div class="step-dot">3</div><div class="step-label">מושבים</div></div>
-    <div class="step"        role="listitem"><div class="step-dot">4</div><div class="step-label">סיכום</div></div>
-    <div class="step"        role="listitem"><div class="step-dot">5</div><div class="step-label">תשלום</div></div>
-    <div class="step"        role="listitem"><div class="step-dot">6</div><div class="step-label">אישור</div></div>
+    <div class="step active" role="listitem"><div class="step-dot">1</div><div class="step-label" data-i18n="step.search">חיפוש</div></div>
+    <div class="step"        role="listitem"><div class="step-dot">2</div><div class="step-label" data-i18n="step.results">תוצאות</div></div>
+    <div class="step"        role="listitem"><div class="step-dot">3</div><div class="step-label" data-i18n="step.seats">מושבים</div></div>
+    <div class="step"        role="listitem"><div class="step-dot">4</div><div class="step-label" data-i18n="step.summary">סיכום</div></div>
+    <div class="step"        role="listitem"><div class="step-dot">5</div><div class="step-label" data-i18n="step.payment">תשלום</div></div>
+    <div class="step"        role="listitem"><div class="step-dot">6</div><div class="step-label" data-i18n="step.confirm">אישור</div></div>
   </div>
 
   <!-- ── כותרת עמוד ── -->
   <div class="page-hero">
     <div class="container">
-      <h1>חיפוש טיסות</h1>
-      <p>מצא את הטיסה הטובה ביותר למסע שלך</p>
+      <h1 data-i18n="flights.h1">חיפוש טיסות</h1>
+      <p data-i18n="flights.hero.sub">מצא את הטיסה הטובה ביותר למסע שלך</p>
     </div>
   </div>
 
@@ -60,20 +60,20 @@
         <!-- סוג הטיסה -->
         <div class="trip-type-row">
           <div class="toggle-group" role="group" aria-label="סוג נסיעה">
-            <button class="toggle-btn active" data-type="one-way" aria-pressed="true">כיוון אחד</button>
-            <button class="toggle-btn" data-type="round-trip" aria-pressed="false">הלוך ושוב</button>
+            <button class="toggle-btn active" data-type="one-way" aria-pressed="true" data-i18n="flights.trip.oneway">כיוון אחד</button>
+            <button class="toggle-btn" data-type="round-trip" aria-pressed="false" data-i18n="flights.trip.return">הלוך ושוב</button>
           </div>
-          <span class="badge badge-primary" style="font-size:0.8rem;">תל אביב ← אירופה</span>
+          <span class="badge badge-primary" style="font-size:0.8rem;" data-i18n="flights.badge">תל אביב ← אירופה</span>
         </div>
 
         <!-- נתיב -->
         <div class="form-grid-2" style="margin-bottom:16px;">
           <div class="form-group">
-            <label class="form-label" for="from-city">מ <span class="required">*</span></label>
+            <label class="form-label" for="from-city"><span data-i18n="flights.from.label">מ</span> <span class="required">*</span></label>
             <input id="from-city" class="form-control" type="text" value="תל אביב (TLV)" readonly aria-readonly="true" />
           </div>
           <div class="form-group">
-            <label class="form-label" for="to-city">אל <span class="required">*</span></label>
+            <label class="form-label" for="to-city"><span data-i18n="flights.to.label">אל</span> <span class="required">*</span></label>
             <select id="to-city" class="form-control" aria-label="עיר יעד">
               <option value="BCN">ברצלונה (BCN)</option>
               <option value="LIS">ליסבון (LIS)</option>
@@ -86,12 +86,12 @@
         <!-- תאריכים -->
         <div class="form-grid-2" style="margin-bottom:8px;">
           <div class="form-group">
-            <label class="form-label" for="departure-date">תאריך יציאה <span class="required">*</span></label>
+            <label class="form-label" for="departure-date"><span data-i18n="flights.depart.label">תאריך יציאה</span> <span class="required">*</span></label>
             <input id="departure-date" class="form-control" type="date" aria-required="true" />
             <span class="form-error" id="date-error"></span>
           </div>
           <div class="form-group return-row" id="return-row">
-            <label class="form-label" for="return-date">תאריך חזרה <span class="required">*</span></label>
+            <label class="form-label" for="return-date"><span data-i18n="flights.return.label">תאריך חזרה</span> <span class="required">*</span></label>
             <input id="return-date" class="form-control" type="date" aria-required="true" />
           </div>
         </div>
@@ -100,12 +100,12 @@
 
         <!-- נוסעים -->
         <div class="passengers-section">
-          <h4>נוסעים</h4>
+          <h4 data-i18n="flights.pax.h4">נוסעים</h4>
 
           <div class="passenger-row">
             <div>
-              <div class="passenger-label">מבוגרים</div>
-              <div class="passenger-sub">גיל 18 ומעלה</div>
+              <div class="passenger-label" data-i18n="flights.pax.adults">מבוגרים</div>
+              <div class="passenger-sub" data-i18n="flights.pax.adults.sub">גיל 18 ומעלה</div>
             </div>
             <div class="counter-group">
               <button class="counter-btn" data-target="adults" data-action="dec" aria-label="הסר מבוגר">−</button>
@@ -116,8 +116,8 @@
 
           <div class="passenger-row">
             <div>
-              <div class="passenger-label">נוער</div>
-              <div class="passenger-sub">גיל 12 – 17</div>
+              <div class="passenger-label" data-i18n="flights.pax.teens">נוער</div>
+              <div class="passenger-sub" data-i18n="flights.pax.teens.sub">גיל 12 – 17</div>
             </div>
             <div class="counter-group">
               <button class="counter-btn" data-target="teens" data-action="dec" aria-label="הסר נער">−</button>
@@ -128,8 +128,8 @@
 
           <div class="passenger-row">
             <div>
-              <div class="passenger-label">ילדים</div>
-              <div class="passenger-sub">גיל 2 – 11</div>
+              <div class="passenger-label" data-i18n="flights.pax.children">ילדים</div>
+              <div class="passenger-sub" data-i18n="flights.pax.children.sub">גיל 2 – 11</div>
             </div>
             <div class="counter-group">
               <button class="counter-btn" data-target="children" data-action="dec" aria-label="הסר ילד">−</button>
@@ -145,7 +145,7 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
             <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
           </svg>
-          חפש טיסות
+          <span data-i18n="flights.btn.search">חפש טיסות</span>
         </button>
 
       </div>

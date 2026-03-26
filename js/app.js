@@ -208,12 +208,12 @@ function initFlightsPage() {
   if (searchBtn) {
     searchBtn.addEventListener('click', () => {
       if (!deptInput || !deptInput.value) {
-        showError(deptInput, 'נא לבחור תאריך יציאה.');
+        showError(deptInput, tOr('err.noDate', 'נא לבחור תאריך יציאה.'));
         return;
       }
       const totalPassengers = STATE.passengers.adults + STATE.passengers.teens + STATE.passengers.children;
       if (totalPassengers < 1) {
-        showToast('נא להוסיף לפחות נוסע אחד.', 'error');
+        showToast(tOr('err.noPax', 'נא להוסיף לפחות נוסע אחד.'), 'error');
         return;
       }
       STATE.departure = deptInput.value;
@@ -228,11 +228,10 @@ function initResultsPage() {
   if (!$('.results-page')) return;
   loadState();
 
-  const L = window.VOLAIR_LABELS || {};
   const flights = [
-    { id: 'VA101', dep: '06:30', arr: '08:45', duration: '2h 15m', price: 120, label: L.bestValue    || 'Best Value' },
+    { id: 'VA101', dep: '06:30', arr: '08:45', duration: '2h 15m', price: 120, label: tOr('lbl.bestValue',   'הכי משתלם') },
     { id: 'VA203', dep: '11:00', arr: '13:10', duration: '2h 10m', price: 95,  label: null },
-    { id: 'VA315', dep: '17:45', arr: '20:05', duration: '2h 20m', price: 145, label: L.mostPopular  || 'Most Popular' }
+    { id: 'VA315', dep: '17:45', arr: '20:05', duration: '2h 20m', price: 145, label: tOr('lbl.mostPopular', 'הפופולרי ביותר') }
   ];
 
   const list = $('.flight-list');
@@ -241,7 +240,7 @@ function initResultsPage() {
       const card = document.createElement('div');
       card.className = 'flight-card' + (f.id === STATE.selectedFlight ? ' selected' : '');
       card.dataset.id = f.id;
-      const isBest = f.label === (L.bestValue || 'Best Value');
+      const isBest = f.label === tOr('lbl.bestValue', 'הכי משתלם');
       card.innerHTML = `
         <div class="flight-header">
           <span class="flight-number">${f.id}</span>
@@ -255,7 +254,7 @@ function initResultsPage() {
           <div class="flight-duration">
             <div class="duration-text">${f.duration}</div>
             <div class="duration-line"></div>
-            <div class="flight-direct">${L.direct || 'Direct'}</div>
+            <div class="flight-direct">${tOr('lbl.direct', 'ישיר')}</div>
           </div>
           <div class="flight-time">
             <div class="time">${f.arr}</div>
@@ -265,10 +264,10 @@ function initResultsPage() {
         <div class="flight-footer">
           <div class="flight-price">
             <div class="amount">${formatPrice(f.price)}</div>
-            <div class="per">${L.perPassenger || 'per passenger'}</div>
+            <div class="per">${tOr('lbl.perPassenger', 'לנוסע')}</div>
           </div>
           <button class="btn btn-primary btn-sm select-flight-btn" data-id="${f.id}">
-            ${f.id === STATE.selectedFlight ? (L.selected||'Selected ✓') : (L.select||'Select')}
+            ${f.id === STATE.selectedFlight ? tOr('lbl.selected', 'נבחר ✓') : tOr('lbl.select', 'בחר')}
           </button>
         </div>`;
       list.appendChild(card);
@@ -294,9 +293,9 @@ function initResultsPage() {
       saveState();
 
       $$('.flight-card').forEach(c => c.classList.remove('selected'));
-      $$('.select-flight-btn').forEach(b => { b.textContent = L.select || 'Select'; });
+      $$('.select-flight-btn').forEach(b => { b.textContent = tOr('lbl.select', 'בחר'); });
       btn.closest('.flight-card').classList.add('selected');
-      btn.textContent = L.selected || 'Selected ✓';
+      btn.textContent = tOr('lbl.selected', 'נבחר ✓');
 
       updateExtrasTotal();
     });
@@ -407,7 +406,7 @@ function initResultsPage() {
   // Navigation
   const nextBtn = $('#next-btn');
   if (nextBtn) nextBtn.addEventListener('click', () => {
-    if (!STATE.selectedFlight) { showToast('נא לבחור טיסה תחילה.', 'error'); return; }
+    if (!STATE.selectedFlight) { showToast(tOr('err.noFlight', 'נא לבחור טיסה תחילה.'), 'error'); return; }
     window.location.href = 'seats.html';
   });
 
@@ -478,7 +477,7 @@ function initSeatsPage() {
       STATE.selectedSeats = STATE.selectedSeats.filter(s => s !== id);
     } else {
       if (STATE.selectedSeats.length >= max) {
-        showToast(`ניתן לבחור עד ${max} מושב(ים) בלבד.`, 'warn');
+        showToast(tOr('err.maxSeats', 'ניתן לבחור עד {n} מושב(ים) בלבד.').replace('{n}', max), 'warn');
         return;
       }
       el.classList.remove('available');
@@ -500,14 +499,13 @@ function initSeatsPage() {
 
   function updateSeatInfo() {
     const infoEl = $('.selected-seats-info');
-    const SL = window.VOLAIR_LABELS || {};
     if (!infoEl) return;
     if (STATE.selectedSeats.length === 0) {
-      infoEl.innerHTML = `<span class="text-muted">${SL.noSeats || 'No seats selected yet.'}</span>`;
+      infoEl.innerHTML = `<span class="text-muted">${tOr('seats.noSeats', 'טרם נבחרו מושבים.')}</span>`;
     } else {
-      const sel   = SL.seatsSelected || 'Selected';
-      const ofLbl = SL.of            || 'of';
-      const pass  = SL.passengers    || 'passengers';
+      const sel   = tOr('seats.seatsSelected', 'נבחרו');
+      const ofLbl = tOr('seats.of',            'מתוך');
+      const pass  = tOr('seats.passengers',    'נוסעים');
       infoEl.innerHTML = `<strong>${sel}:</strong> ${STATE.selectedSeats.join(', ')} &nbsp;|&nbsp; <strong>${STATE.selectedSeats.length}/${totalPassengers}</strong> ${pass}`;
     }
   }
@@ -516,7 +514,7 @@ function initSeatsPage() {
   const nextBtn = $('#next-btn');
   if (nextBtn) nextBtn.addEventListener('click', () => {
     if (STATE.selectedSeats.length < totalPassengers) {
-      showToast(`נא לבחור ${totalPassengers} מושב(ים) עבור כל הנוסעים.`, 'error');
+      showToast(tOr('err.needSeats', 'נא לבחור {n} מושב(ים) עבור כל הנוסעים.').replace('{n}', totalPassengers), 'error');
       return;
     }
     window.location.href = 'summary.html';
@@ -542,12 +540,16 @@ function initSummaryPage() {
   STATE.totalPrice = total;
 
   // Build extras summary label (e.g. "מזוודה ×2, עלייה מועדפת ×1")
-  const hebrewNames = { luggage: 'מזוודה', priority: 'עלייה מועדפת', drinks: 'משקאות' };
+  const extrasNames = {
+    luggage:  tOr('results.extras.luggage.name',  'מזוודה'),
+    priority: tOr('results.extras.priority.name', 'עלייה מועדפת'),
+    drinks:   tOr('results.extras.drinks.name',   'משקאות')
+  };
   const extrasSummary = Object.keys(EXTRA_PRICES).map(k => {
     const count = perPax.filter(p => p[k]).length;
     if (!count) return null;
-    return count === totalPassengers ? hebrewNames[k] : `${hebrewNames[k]} ×${count}`;
-  }).filter(Boolean).join(', ') || 'ללא';
+    return count === totalPassengers ? extrasNames[k] : `${extrasNames[k]} ×${count}`;
+  }).filter(Boolean).join(', ') || tOr('summary.none', 'ללא');
 
   // Populate summary display
   const sets = {
@@ -578,11 +580,11 @@ function initSummaryPage() {
       let valid = true;
 
       if (!emailInput.value || !emailInput.checkValidity()) {
-        showError(emailInput, 'נא להזין כתובת דוא"ל תקינה.', { focus: valid });
+        showError(emailInput, tOr('err.noEmail', 'נא להזין כתובת דוא"ל תקינה.'), { focus: valid });
         valid = false;
       }
       if (!phoneInput.value) {
-        showError(phoneInput, 'נא להזין מספר טלפון.', { focus: valid });
+        showError(phoneInput, tOr('err.noPhone', 'נא להזין מספר טלפון.'), { focus: valid });
         valid = false;
       }
 
@@ -635,10 +637,10 @@ function initPaymentPage() {
     payBtn.addEventListener('click', () => {
       if (STATE.paymentMethod === 'card') {
         const cardFields = [
-          { el: $('#card-name'),   msg: 'נא להזין שם בעל הכרטיס.' },
-          { el: $('#card-number'), msg: 'נא להזין מספר כרטיס.' },
-          { el: $('#card-expiry'), msg: 'נא להזין תאריך תפוגה.' },
-          { el: $('#card-cvv'),    msg: 'נא להזין קוד CVV.' },
+          { el: $('#card-name'),   msg: tOr('err.noCardName',   'נא להזין שם בעל הכרטיס.') },
+          { el: $('#card-number'), msg: tOr('err.noCardNumber', 'נא להזין מספר כרטיס.') },
+          { el: $('#card-expiry'), msg: tOr('err.noCardExpiry', 'נא להזין תאריך תפוגה.') },
+          { el: $('#card-cvv'),    msg: tOr('err.noCardCVV',    'נא להזין קוד CVV.') },
         ];
         const invalid = cardFields.filter(f => !f.el?.value?.trim());
         if (invalid.length) {
@@ -682,11 +684,15 @@ function initConfirmationPage() {
       const tp = STATE.passengers.adults + STATE.passengers.teens + STATE.passengers.children || 1;
       const pp = Array.isArray(STATE.extrasPerPassenger) && STATE.extrasPerPassenger.length === tp
         ? STATE.extrasPerPassenger : Array.from({ length: tp }, () => ({ ...STATE.extras }));
-      const names = { luggage: 'מזוודה', priority: 'עלייה מועדפת', drinks: 'משקאות' };
+      const names = {
+        luggage:  tOr('results.extras.luggage.name',  'מזוודה'),
+        priority: tOr('results.extras.priority.name', 'עלייה מועדפת'),
+        drinks:   tOr('results.extras.drinks.name',   'משקאות')
+      };
       return Object.keys(EXTRA_PRICES).map(k => {
         const c = pp.filter(p => p[k]).length;
         return c ? (c === tp ? names[k] : `${names[k]} ×${c}`) : null;
-      }).filter(Boolean).join(', ') || 'ללא';
+      }).filter(Boolean).join(', ') || tOr('summary.none', 'ללא');
     })()
   };
   Object.entries(sets).forEach(([sel, val]) => {
@@ -702,26 +708,30 @@ function initConfirmationPage() {
   const saveBtn = $('#save-btn');
   if (saveBtn) {
     saveBtn.addEventListener('click', () => {
-      const hebrewExtrasMap = { luggage: 'מזוודה', priority: 'עלייה מועדפת', drinks: 'משקאות' };
+      const extrasMapTxt = {
+        luggage:  tOr('results.extras.luggage.name',  'מזוודה'),
+        priority: tOr('results.extras.priority.name', 'עלייה מועדפת'),
+        drinks:   tOr('results.extras.drinks.name',   'משקאות')
+      };
       const tp2 = STATE.passengers.adults + STATE.passengers.teens + STATE.passengers.children || 1;
       const pp2 = Array.isArray(STATE.extrasPerPassenger) && STATE.extrasPerPassenger.length === tp2
         ? STATE.extrasPerPassenger : Array.from({ length: tp2 }, () => ({ ...STATE.extras }));
-      const activeExtrasHe = Object.keys(hebrewExtrasMap).map(k => {
+      const activeExtrasTxt = Object.keys(extrasMapTxt).map(k => {
         const c = pp2.filter(p => p[k]).length;
-        return c ? (c === tp2 ? hebrewExtrasMap[k] : `${hebrewExtrasMap[k]} ×${c}`) : null;
+        return c ? (c === tp2 ? extrasMapTxt[k] : `${extrasMapTxt[k]} ×${c}`) : null;
       }).filter(Boolean);
       const content = [
-        'VolAir Airlines — אישור הזמנה',
+        tOr('conf.txt.title',  'VolAir Airlines — אישור הזמנה'),
         '═══════════════════════════════════════',
-        `מספר הזמנה: ${ref}`,
-        `טיסה:       ${STATE.selectedFlight || 'VA101'}`,
-        `תאריך:      ${STATE.departure || '—'}`,
-        `מושבים:     ${STATE.selectedSeats.join(', ') || '—'}`,
-        `תוספות:     ${activeExtrasHe.join(', ') || 'ללא'}`,
-        `דוא"ל:      ${STATE.contact.email || '—'}`,
-        `סה"כ שולם:  ${formatPrice(STATE.totalPrice || 0)}`,
+        `${tOr('conf.txt.ref',    'מספר הזמנה:')} ${ref}`,
+        `${tOr('conf.txt.flight', 'טיסה:')}       ${STATE.selectedFlight || 'VA101'}`,
+        `${tOr('conf.txt.date',   'תאריך:')}      ${STATE.departure || '—'}`,
+        `${tOr('conf.txt.seats',  'מושבים:')}     ${STATE.selectedSeats.join(', ') || '—'}`,
+        `${tOr('conf.txt.extras', 'תוספות:')}     ${activeExtrasTxt.join(', ') || tOr('summary.none', 'ללא')}`,
+        `${tOr('conf.txt.email',  'דוא"ל:')}      ${STATE.contact.email || '—'}`,
+        `${tOr('conf.txt.total',  'סה"כ שולם:')}  ${formatPrice(STATE.totalPrice || 0)}`,
         '',
-        '!תודה שטסת עם VolAir Airlines'
+        tOr('conf.txt.thanks', '!תודה שטסת עם VolAir Airlines')
       ].join('\n');
 
       const blob = new Blob([content], { type: 'text/plain' });

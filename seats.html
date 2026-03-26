@@ -35,18 +35,18 @@
   </nav>
 
   <div class="progress-steps" role="list" aria-label="שלבי הזמנה">
-    <div class="step done"   role="listitem"><div class="step-dot">✓</div><div class="step-label">חיפוש</div></div>
-    <div class="step done"   role="listitem"><div class="step-dot">✓</div><div class="step-label">תוצאות</div></div>
-    <div class="step active" role="listitem"><div class="step-dot">3</div><div class="step-label">מושבים</div></div>
-    <div class="step"        role="listitem"><div class="step-dot">4</div><div class="step-label">סיכום</div></div>
-    <div class="step"        role="listitem"><div class="step-dot">5</div><div class="step-label">תשלום</div></div>
-    <div class="step"        role="listitem"><div class="step-dot">6</div><div class="step-label">אישור</div></div>
+    <div class="step done"   role="listitem"><div class="step-dot">✓</div><div class="step-label" data-i18n="step.search">חיפוש</div></div>
+    <div class="step done"   role="listitem"><div class="step-dot">✓</div><div class="step-label" data-i18n="step.results">תוצאות</div></div>
+    <div class="step active" role="listitem"><div class="step-dot">3</div><div class="step-label" data-i18n="step.seats">מושבים</div></div>
+    <div class="step"        role="listitem"><div class="step-dot">4</div><div class="step-label" data-i18n="step.summary">סיכום</div></div>
+    <div class="step"        role="listitem"><div class="step-dot">5</div><div class="step-label" data-i18n="step.payment">תשלום</div></div>
+    <div class="step"        role="listitem"><div class="step-dot">6</div><div class="step-label" data-i18n="step.confirm">אישור</div></div>
   </div>
 
   <div class="page-hero">
     <div class="container">
-      <h1>בחר את המושבים שלך</h1>
-      <p>Airbus A320neo · TLV ← BCN</p>
+      <h1 data-i18n="seats.h1">בחר את המושבים שלך</h1>
+      <p data-i18n="seats.hero.sub">Airbus A320neo · TLV ← BCN</p>
     </div>
   </div>
 
@@ -58,22 +58,22 @@
         <div class="seat-legend" role="list" aria-label="מקרא סטטוס מושבים">
           <div class="seat-legend-item" role="listitem">
             <div class="legend-dot available" aria-hidden="true"></div>
-            פנוי
+            <span data-i18n="seats.legend.available">פנוי</span>
           </div>
           <div class="seat-legend-item" role="listitem">
             <div class="legend-dot taken" aria-hidden="true"></div>
-            תפוס
+            <span data-i18n="seats.legend.taken">תפוס</span>
           </div>
           <div class="seat-legend-item" role="listitem">
             <div class="legend-dot selected" aria-hidden="true"></div>
-            הבחירה שלך
+            <span data-i18n="seats.legend.selected">הבחירה שלך</span>
           </div>
         </div>
 
         <!-- תוויות מחלקה -->
         <div style="display:flex;gap:8px;justify-content:center;margin-bottom:20px;flex-wrap:wrap;">
-          <span class="badge" style="background:rgba(74,159,232,0.12);color:var(--color-accent);">שורות 1–3 · מחלקת עסקים</span>
-          <span class="badge badge-primary">שורות 4–20 · מחלקת תיירים</span>
+          <span class="badge" style="background:rgba(74,159,232,0.12);color:var(--color-accent);" data-i18n="seats.business">שורות 1–3 · מחלקת עסקים</span>
+          <span class="badge badge-primary" data-i18n="seats.economy">שורות 4–20 · מחלקת תיירים</span>
         </div>
 
         <!-- כותרות עמודות -->
@@ -106,10 +106,10 @@
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path d="M5 12h14M12 5l7 7-7 7"/>
             </svg>
-            חזרה
+            <span data-i18n="seats.btn.back">חזרה</span>
           </button>
           <button id="next-btn" class="btn btn-primary">
-            המשך לסיכום
+            <span data-i18n="seats.btn.next">המשך לסיכום</span>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path d="M19 12H5M12 5l-7 7 7 7"/>
             </svg>

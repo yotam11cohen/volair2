@@ -184,7 +184,52 @@
       'conf.btn.print':   'Print Ticket',
       'conf.btn.save':    'Save as Text',
       'conf.btn.new':     'Book Another Flight',
-      'conf.step.done':   'Done!',
+      'conf.step.done':      'Done!',
+      'conf.footer.brand':   'Thank you for choosing VolAir Airlines. We look forward to flying with you again!',
+
+      // ── Payment extras ──
+      'payment.methods.h3':  'Choose Payment Method',
+      'payment.paypal.sub':  'Pay with your PayPal balance',
+      'payment.digital.sub': 'Fast and secure payment',
+      'payment.ssl':         'SSL Encrypted',
+      'payment.pci':         'PCI DSS Compliant',
+      'payment.cancel24':    'Free cancellation within 24 hours',
+      'payment.pay.prefix':  'Pay Now — ',
+
+      // ── Summary extras ──
+      'summary.none':        'None',
+
+      // ── Seats extras ──
+      'seats.noSeats':       'No seats selected yet.',
+      'seats.seatsSelected': 'Selected',
+      'seats.of':            'of',
+      'seats.passengers':    'passengers',
+      'seats.business':      'Rows 1–3 · Business Class',
+      'seats.economy':       'Rows 4–20 · Economy Class',
+
+      // ── Validation & toast errors ──
+      'err.noDate':         'Please select a departure date.',
+      'err.noPax':          'Please add at least one passenger.',
+      'err.noFlight':       'Please select a flight first.',
+      'err.maxSeats':       'You can select up to {n} seat(s) only.',
+      'err.needSeats':      'Please select {n} seat(s) for all passengers.',
+      'err.noEmail':        'Please enter a valid email address.',
+      'err.noPhone':        'Please enter a phone number.',
+      'err.noCardName':     'Please enter the cardholder name.',
+      'err.noCardNumber':   'Please enter the card number.',
+      'err.noCardExpiry':   'Please enter the expiry date.',
+      'err.noCardCVV':      'Please enter the CVV code.',
+
+      // ── Confirmation save-as-text ──
+      'conf.txt.title':     'VolAir Airlines — Booking Confirmation',
+      'conf.txt.ref':       'Booking Ref:',
+      'conf.txt.flight':    'Flight:',
+      'conf.txt.date':      'Date:',
+      'conf.txt.seats':     'Seats:',
+      'conf.txt.extras':    'Extras:',
+      'conf.txt.email':     'Email:',
+      'conf.txt.total':     'Total Paid:',
+      'conf.txt.thanks':    'Thank you for flying with VolAir Airlines!',
 
       // ── About page ──
       'about.h1':         'About VolAir Airlines',
@@ -454,7 +499,52 @@
       'conf.btn.print':   'Imprimer le billet',
       'conf.btn.save':    'Enregistrer en texte',
       'conf.btn.new':     'Réserver un autre vol',
-      'conf.step.done':   'Terminé !',
+      'conf.step.done':      'Terminé !',
+      'conf.footer.brand':   'Merci d\'avoir choisi VolAir Airlines. Nous nous réjouissons de voler avec vous à nouveau !',
+
+      // ── Payment extras ──
+      'payment.methods.h3':  'Choisir un mode de paiement',
+      'payment.paypal.sub':  'Payer avec votre solde PayPal',
+      'payment.digital.sub': 'Paiement rapide et sécurisé',
+      'payment.ssl':         'Chiffré SSL',
+      'payment.pci':         'Conforme PCI DSS',
+      'payment.cancel24':    'Annulation gratuite sous 24 heures',
+      'payment.pay.prefix':  'Payer maintenant — ',
+
+      // ── Summary extras ──
+      'summary.none':        'Aucune',
+
+      // ── Seats extras ──
+      'seats.noSeats':       'Aucun siège sélectionné.',
+      'seats.seatsSelected': 'Sélectionné',
+      'seats.of':            'sur',
+      'seats.passengers':    'passagers',
+      'seats.business':      'Rangées 1–3 · Classe Affaires',
+      'seats.economy':       'Rangées 4–20 · Classe Économique',
+
+      // ── Validation & toast errors ──
+      'err.noDate':         'Veuillez sélectionner une date de départ.',
+      'err.noPax':          'Veuillez ajouter au moins un passager.',
+      'err.noFlight':       'Veuillez sélectionner un vol d\'abord.',
+      'err.maxSeats':       'Vous pouvez sélectionner jusqu\'à {n} siège(s) seulement.',
+      'err.needSeats':      'Veuillez sélectionner {n} siège(s) pour tous les passagers.',
+      'err.noEmail':        'Veuillez entrer une adresse e-mail valide.',
+      'err.noPhone':        'Veuillez entrer un numéro de téléphone.',
+      'err.noCardName':     'Veuillez entrer le nom du titulaire de la carte.',
+      'err.noCardNumber':   'Veuillez entrer le numéro de carte.',
+      'err.noCardExpiry':   'Veuillez entrer la date d\'expiration.',
+      'err.noCardCVV':      'Veuillez entrer le code CVV.',
+
+      // ── Confirmation save-as-text ──
+      'conf.txt.title':     'VolAir Airlines — Confirmation de réservation',
+      'conf.txt.ref':       'Réf. réservation :',
+      'conf.txt.flight':    'Vol :',
+      'conf.txt.date':      'Date :',
+      'conf.txt.seats':     'Sièges :',
+      'conf.txt.extras':    'Options :',
+      'conf.txt.email':     'E-mail :',
+      'conf.txt.total':     'Total payé :',
+      'conf.txt.thanks':    'Merci d\'avoir volé avec VolAir Airlines !',
 
       // ── About page ──
       'about.h1':         'À propos de VolAir Airlines',

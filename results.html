@@ -35,17 +35,17 @@
   </nav>
 
   <div class="progress-steps" role="list" aria-label="שלבי הזמנה">
-    <div class="step done"   role="listitem"><div class="step-dot">✓</div><div class="step-label">חיפוש</div></div>
-    <div class="step active" role="listitem"><div class="step-dot">2</div><div class="step-label">תוצאות</div></div>
-    <div class="step"        role="listitem"><div class="step-dot">3</div><div class="step-label">מושבים</div></div>
-    <div class="step"        role="listitem"><div class="step-dot">4</div><div class="step-label">סיכום</div></div>
-    <div class="step"        role="listitem"><div class="step-dot">5</div><div class="step-label">תשלום</div></div>
-    <div class="step"        role="listitem"><div class="step-dot">6</div><div class="step-label">אישור</div></div>
+    <div class="step done"   role="listitem"><div class="step-dot">✓</div><div class="step-label" data-i18n="step.search">חיפוש</div></div>
+    <div class="step active" role="listitem"><div class="step-dot">2</div><div class="step-label" data-i18n="step.results">תוצאות</div></div>
+    <div class="step"        role="listitem"><div class="step-dot">3</div><div class="step-label" data-i18n="step.seats">מושבים</div></div>
+    <div class="step"        role="listitem"><div class="step-dot">4</div><div class="step-label" data-i18n="step.summary">סיכום</div></div>
+    <div class="step"        role="listitem"><div class="step-dot">5</div><div class="step-label" data-i18n="step.payment">תשלום</div></div>
+    <div class="step"        role="listitem"><div class="step-dot">6</div><div class="step-label" data-i18n="step.confirm">אישור</div></div>
   </div>
 
   <div class="page-hero">
     <div class="container">
-      <h1>טיסות זמינות</h1>
+      <h1 data-i18n="results.h1">טיסות זמינות</h1>
       <p>תל אביב (TLV) ← ברצלונה (BCN) &nbsp;·&nbsp; נמצאו 3 טיסות</p>
     </div>
   </div>
@@ -56,7 +56,7 @@
 
         <!-- רשימת טיסות -->
         <div>
-          <h2 style="margin-bottom:20px;font-size:1.2rem;color:var(--color-muted);font-weight:600;">בחר את הטיסה שלך</h2>
+          <h2 style="margin-bottom:20px;font-size:1.2rem;color:var(--color-muted);font-weight:600;" data-i18n="results.select.h2">בחר את הטיסה שלך</h2>
           <div class="flight-list" aria-label="טיסות זמינות" role="list">
             <!-- טיסות נוצרות על ידי JS -->
           </div>
@@ -66,10 +66,10 @@
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path d="M5 12h14M12 5l7 7-7 7"/>
               </svg>
-              חזרה
+              <span data-i18n="results.btn.back">חזרה</span>
             </button>
             <button id="next-btn" class="btn btn-primary">
-              המשך לבחירת מושב
+              <span data-i18n="results.btn.next">המשך לבחירת מושב</span>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path d="M19 12H5M12 5l-7 7 7 7"/>
               </svg>
@@ -90,8 +90,8 @@
             <div class="extra-item" data-extra="luggage" role="checkbox" aria-checked="false" tabindex="0">
               <div class="extra-checkbox" aria-hidden="true"></div>
               <div class="extra-info">
-                <div class="extra-name">מזוודה לבטן המטוס</div>
-                <div class="extra-desc">1 × 23 ק"ג</div>
+                <div class="extra-name" data-i18n="results.extras.luggage.name">מזוודה לבטן המטוס</div>
+                <div class="extra-desc" data-i18n="results.extras.luggage.desc">1 × 23 ק"ג</div>
               </div>
               <div class="extra-price">+€35</div>
             </div>
@@ -99,8 +99,8 @@
             <div class="extra-item" data-extra="priority" role="checkbox" aria-checked="false" tabindex="0">
               <div class="extra-checkbox" aria-hidden="true"></div>
               <div class="extra-info">
-                <div class="extra-name">עלייה מועדפת למטוס</div>
-                <div class="extra-desc">עלה לפני כולם</div>
+                <div class="extra-name" data-i18n="results.extras.priority.name">עלייה מועדפת למטוס</div>
+                <div class="extra-desc" data-i18n="results.extras.priority.desc">עלה לפני כולם</div>
               </div>
               <div class="extra-price">+€15</div>
             </div>
@@ -108,15 +108,15 @@
             <div class="extra-item" data-extra="drinks" role="checkbox" aria-checked="false" tabindex="0">
               <div class="extra-checkbox" aria-hidden="true"></div>
               <div class="extra-info">
-                <div class="extra-name">משקאות מיוחדים</div>
-                <div class="extra-desc">מארז קוקטיילים פרמיום</div>
+                <div class="extra-name" data-i18n="results.extras.drinks.name">משקאות מיוחדים</div>
+                <div class="extra-desc" data-i18n="results.extras.drinks.desc">מארז קוקטיילים פרמיום</div>
               </div>
               <div class="extra-price">+€25</div>
             </div>
 
             <hr class="divider" />
             <div class="d-flex justify-between align-center">
-              <span class="font-bold">סה"כ משוער</span>
+              <span class="font-bold" data-i18n="results.total">סה"כ משוער</span>
               <span class="font-bold" id="extras-total" style="color:var(--color-primary);font-size:1.2rem;" aria-live="polite" aria-atomic="true">€—</span>
             </div>
             <p class="text-muted" style="font-size:0.75rem;margin-top:6px;" id="extras-per-label" data-i18n="results.perPax">לנוסע · כולל מסים</p>

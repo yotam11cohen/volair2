@@ -35,18 +35,18 @@
   </nav>
 
   <div class="progress-steps" role="list" aria-label="שלבי הזמנה">
-    <div class="step done"   role="listitem"><div class="step-dot">✓</div><div class="step-label">חיפוש</div></div>
-    <div class="step done"   role="listitem"><div class="step-dot">✓</div><div class="step-label">תוצאות</div></div>
-    <div class="step done"   role="listitem"><div class="step-dot">✓</div><div class="step-label">מושבים</div></div>
-    <div class="step active" role="listitem"><div class="step-dot">4</div><div class="step-label">סיכום</div></div>
-    <div class="step"        role="listitem"><div class="step-dot">5</div><div class="step-label">תשלום</div></div>
-    <div class="step"        role="listitem"><div class="step-dot">6</div><div class="step-label">אישור</div></div>
+    <div class="step done"   role="listitem"><div class="step-dot">✓</div><div class="step-label" data-i18n="step.search">חיפוש</div></div>
+    <div class="step done"   role="listitem"><div class="step-dot">✓</div><div class="step-label" data-i18n="step.results">תוצאות</div></div>
+    <div class="step done"   role="listitem"><div class="step-dot">✓</div><div class="step-label" data-i18n="step.seats">מושבים</div></div>
+    <div class="step active" role="listitem"><div class="step-dot">4</div><div class="step-label" data-i18n="step.summary">סיכום</div></div>
+    <div class="step"        role="listitem"><div class="step-dot">5</div><div class="step-label" data-i18n="step.payment">תשלום</div></div>
+    <div class="step"        role="listitem"><div class="step-dot">6</div><div class="step-label" data-i18n="step.confirm">אישור</div></div>
   </div>
 
   <div class="page-hero">
     <div class="container">
-      <h1>סיכום הזמנה</h1>
-      <p>בדוק את הפרטים לפני המעבר לתשלום</p>
+      <h1 data-i18n="summary.h1">סיכום הזמנה</h1>
+      <p data-i18n="summary.hero.sub">בדוק את הפרטים לפני המעבר לתשלום</p>
     </div>
   </div>
 
@@ -57,45 +57,45 @@
         <!-- שמאל: פרטי הזמנה -->
         <div>
           <div class="card summary-section">
-            <h3>פרטי הטיסה</h3>
+            <h3 data-i18n="summary.flight.h3">פרטי הטיסה</h3>
             <div class="summary-row">
-              <span class="label">מספר טיסה</span>
+              <span class="label" data-i18n="summary.row.flight">מספר טיסה</span>
               <span class="value" id="sum-flight">—</span>
             </div>
             <div class="summary-row">
-              <span class="label">מסלול</span>
-              <span class="value">תל אביב (TLV) ← ברצלונה (BCN)</span>
+              <span class="label" data-i18n="summary.row.route">מסלול</span>
+              <span class="value" data-i18n="summary.row.route.val">תל אביב (TLV) ← ברצלונה (BCN)</span>
             </div>
             <div class="summary-row">
-              <span class="label">תאריך</span>
+              <span class="label" data-i18n="summary.row.date">תאריך</span>
               <span class="value" id="sum-date">—</span>
             </div>
             <div class="summary-row">
-              <span class="label">מושבים</span>
+              <span class="label" data-i18n="summary.row.seats">מושבים</span>
               <span class="value" id="sum-seats">—</span>
             </div>
             <div class="summary-row">
-              <span class="label">נוסעים</span>
+              <span class="label" data-i18n="summary.row.passengers">נוסעים</span>
               <span class="value" id="sum-passengers">—</span>
             </div>
             <div class="summary-row">
-              <span class="label">תוספות</span>
+              <span class="label" data-i18n="summary.row.extras">תוספות</span>
               <span class="value" id="sum-extras">ללא</span>
             </div>
           </div>
 
           <div class="card summary-section mt-4">
-            <h3>פירוט מחיר</h3>
+            <h3 data-i18n="summary.price.h3">פירוט מחיר</h3>
             <div class="summary-row">
-              <span class="label">מחיר בסיס (כל הנוסעים)</span>
+              <span class="label" data-i18n="summary.base">מחיר בסיס (כל הנוסעים)</span>
               <span class="value" id="sum-base">—</span>
             </div>
             <div class="summary-row">
-              <span class="label">שירותים נוספים</span>
+              <span class="label" data-i18n="summary.extrasCost">שירותים נוספים</span>
               <span class="value" id="sum-extras-cost">€0.00</span>
             </div>
             <div class="summary-row total">
-              <span class="label">סה"כ</span>
+              <span class="label" data-i18n="summary.total">סה"כ</span>
               <span class="value" id="sum-total">—</span>
             </div>
           </div>
@@ -104,10 +104,10 @@
         <!-- ימין: פרטי קשר -->
         <div>
           <div class="card">
-            <h3 style="margin-bottom:20px;">פרטי יצירת קשר</h3>
+            <h3 style="margin-bottom:20px;" data-i18n="summary.contact.h3">פרטי יצירת קשר</h3>
             <form id="contact-form" novalidate>
               <div class="form-group" style="margin-bottom:16px;">
-                <label class="form-label" for="contact-email">כתובת דוא"ל <span class="required">*</span></label>
+                <label class="form-label" for="contact-email"><span data-i18n="summary.email.label">כתובת דוא"ל</span> <span class="required">*</span></label>
                 <input
                   id="contact-email"
                   class="form-control"
@@ -119,11 +119,11 @@
                   dir="ltr"
                 />
                 <span class="form-error" id="email-error" role="alert" aria-live="polite"></span>
-                <span class="form-helper">הכרטיס האלקטרוני ישלח לכאן</span>
+                <span class="form-helper" data-i18n="summary.email.helper">הכרטיס האלקטרוני ישלח לכאן</span>
               </div>
 
               <div class="form-group" style="margin-bottom:24px;">
-                <label class="form-label" for="contact-phone">מספר טלפון <span class="required">*</span></label>
+                <label class="form-label" for="contact-phone"><span data-i18n="summary.phone.label">מספר טלפון</span> <span class="required">*</span></label>
                 <input
                   id="contact-phone"
                   class="form-control"
@@ -135,12 +135,12 @@
                   dir="ltr"
                 />
                 <span class="form-error" id="phone-error" role="alert" aria-live="polite"></span>
-                <span class="form-helper">לעדכוני טיסה והתראות</span>
+                <span class="form-helper" data-i18n="summary.phone.helper">לעדכוני טיסה והתראות</span>
               </div>
 
               <div style="display:flex;flex-direction:column;gap:12px;">
                 <button type="submit" class="btn btn-primary btn-full btn-lg">
-                  עבור לתשלום
+                  <span data-i18n="summary.btn.submit">עבור לתשלום</span>
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <path d="M19 12H5M12 5l-7 7 7 7"/>
                   </svg>
@@ -149,7 +149,7 @@
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <path d="M5 12h14M12 5l7 7-7 7"/>
                   </svg>
-                  חזרה למושבים
+                  <span data-i18n="summary.btn.back">חזרה למושבים</span>
                 </button>
               </div>
             </form>
@@ -160,9 +160,9 @@
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" aria-hidden="true">
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
               </svg>
-              <strong style="color:var(--color-primary);">הזמנה מאובטחת</strong>
+              <strong style="color:var(--color-primary);" data-i18n="summary.secure.title">הזמנה מאובטחת</strong>
             </div>
-            <p style="font-size:0.85rem;color:var(--color-muted);">המידע שלך מוצפן ומוגן. אנחנו לא שומרים פרטי כרטיס.</p>
+            <p style="font-size:0.85rem;color:var(--color-muted);" data-i18n="summary.secure.text">המידע שלך מוצפן ומוגן. אנחנו לא שומרים פרטי כרטיס.</p>
           </div>
         </div>
 
