@@ -12,6 +12,7 @@ const STATE = {
   passengers:    { adults: 1, teens: 0, children: 0 },
   selectedFlight: null,
   extras:        { luggage: false, priority: false, drinks: false },
+  extrasPerPassenger: [],
   selectedSeats: [],
   contact:       { email: '', phone: '' },
   paymentMethod: 'card',
@@ -44,6 +45,12 @@ function generateRef() {
   let ref = 'VA';
   for (let i = 0; i < 6; i++) ref += chars[Math.floor(Math.random() * chars.length)];
   return ref;
+}
+
+// ── i18n helper ────────────────────────────────
+function tOr(key, hebrewDefault) {
+  const t = window.i18n?.t(key);
+  return (t !== undefined && t !== null) ? t : hebrewDefault;
 }
 
 // ── Mobile nav toggle ──────────────────────────
@@ -295,30 +302,100 @@ function initResultsPage() {
     });
   }
 
-  // Extras
+  // Extras — per-passenger
+  const totalPassengers = STATE.passengers.adults + STATE.passengers.teens + STATE.passengers.children || 1;
+
+  // Ensure extrasPerPassenger is initialised with correct length
+  if (!Array.isArray(STATE.extrasPerPassenger) || STATE.extrasPerPassenger.length !== totalPassengers) {
+    STATE.extrasPerPassenger = Array.from({ length: totalPassengers }, (_, i) =>
+      STATE.extrasPerPassenger?.[i]
+        ? { ...STATE.extrasPerPassenger[i] }
+        : { luggage: false, priority: false, drinks: false }
+    );
+  }
+
+  let currentPaxIndex = 0;
+
+  const paxTabsEl   = $('#pax-tabs');
+  const applyAllBtn = $('#apply-all-btn');
+  const perLabelEl  = $('#extras-per-label');
+
+  if (totalPassengers > 1 && paxTabsEl) {
+    paxTabsEl.style.display   = '';
+    if (applyAllBtn) applyAllBtn.style.display = '';
+    if (perLabelEl)  perLabelEl.setAttribute('data-i18n', 'results.perAll');
+
+    for (let i = 0; i < totalPassengers; i++) {
+      const tab = document.createElement('button');
+      tab.className = 'pax-tab' + (i === 0 ? ' active' : '');
+      tab.setAttribute('role', 'tab');
+      tab.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+      tab.dataset.pax = i;
+      tab.textContent = tOr('results.paxTab', 'נוסע') + ' ' + (i + 1);
+      tab.addEventListener('click', () => {
+        currentPaxIndex = i;
+        $$('.pax-tab', paxTabsEl).forEach((t, idx) => {
+          t.classList.toggle('active', idx === i);
+          t.setAttribute('aria-selected', idx === i ? 'true' : 'false');
+        });
+        refreshExtrasUI();
+      });
+      paxTabsEl.appendChild(tab);
+    }
+  }
+
+  if (applyAllBtn) {
+    applyAllBtn.addEventListener('click', () => {
+      const src = { ...STATE.extrasPerPassenger[currentPaxIndex] };
+      STATE.extrasPerPassenger = STATE.extrasPerPassenger.map(() => ({ ...src }));
+      syncExtras(); saveState(); refreshExtrasUI(); updateExtrasTotal();
+    });
+  }
+
+  function syncExtras() {
+    const merged = { luggage: false, priority: false, drinks: false };
+    STATE.extrasPerPassenger.forEach(p => {
+      Object.keys(merged).forEach(k => { if (p[k]) merged[k] = true; });
+    });
+    STATE.extras = merged;
+  }
+
+  function refreshExtrasUI() {
+    const pax = STATE.extrasPerPassenger[currentPaxIndex];
+    $$('.extra-item').forEach(item => {
+      const chk = item.querySelector('.extra-checkbox');
+      const key = item.dataset.extra;
+      if (!chk || !key) return;
+      chk.classList.toggle('checked', !!pax[key]);
+      item.setAttribute('aria-checked', pax[key] ? 'true' : 'false');
+    });
+  }
+
   $$('.extra-item').forEach(item => {
     const chk = item.querySelector('.extra-checkbox');
     const key = item.dataset.extra;
     if (!chk || !key) return;
 
-    if (STATE.extras[key]) chk.classList.add('checked');
-
     item.addEventListener('click', () => {
-      STATE.extras[key] = !STATE.extras[key];
-      chk.classList.toggle('checked', STATE.extras[key]);
-      saveState();
-      updateExtrasTotal();
+      STATE.extrasPerPassenger[currentPaxIndex][key] = !STATE.extrasPerPassenger[currentPaxIndex][key];
+      syncExtras(); saveState(); refreshExtrasUI(); updateExtrasTotal();
+    });
+    item.addEventListener('keydown', e => {
+      if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); item.click(); }
     });
   });
 
+  refreshExtrasUI();
+
   function updateExtrasTotal() {
-    const basePrice = STATE.selectedFlight ? (BASE_PRICES[STATE.selectedFlight] || 0) : 0;
-    const extraTotal = Object.entries(STATE.extras)
-      .filter(([,v]) => v)
-      .reduce((sum, [k]) => sum + (EXTRA_PRICES[k] || 0), 0);
+    const basePrice  = STATE.selectedFlight ? (BASE_PRICES[STATE.selectedFlight] || 0) : 0;
+    const extrasSum  = STATE.extrasPerPassenger.reduce((sum, pax) =>
+      sum + Object.entries(pax).filter(([,v]) => v).reduce((s, [k]) => s + (EXTRA_PRICES[k] || 0), 0), 0);
+    const grand = basePrice * totalPassengers + extrasSum;
+    STATE.totalPrice = grand;
     const totalEl = $('#extras-total');
     if (totalEl) {
-      totalEl.textContent = formatPrice(basePrice + extraTotal);
+      totalEl.textContent = formatPrice(grand);
       totalEl.classList.remove('price-flash');
       void totalEl.offsetWidth;
       totalEl.classList.add('price-flash');
@@ -456,20 +533,30 @@ function initSummaryPage() {
 
   const totalPassengers = STATE.passengers.adults + STATE.passengers.teens + STATE.passengers.children || 1;
   const basePrice = STATE.selectedFlight ? (BASE_PRICES[STATE.selectedFlight] || 120) : 120;
-  const extrasTotal = Object.entries(STATE.extras)
-    .filter(([,v]) => v)
-    .reduce((sum,[k]) => sum + (EXTRA_PRICES[k]||0), 0);
-  const total = (basePrice + extrasTotal) * totalPassengers;
+  const perPax = Array.isArray(STATE.extrasPerPassenger) && STATE.extrasPerPassenger.length === totalPassengers
+    ? STATE.extrasPerPassenger
+    : Array.from({ length: totalPassengers }, () => ({ ...STATE.extras }));
+  const extrasTotal = perPax.reduce((sum, pax) =>
+    sum + Object.entries(pax).filter(([,v]) => v).reduce((s, [k]) => s + (EXTRA_PRICES[k] || 0), 0), 0);
+  const total = basePrice * totalPassengers + extrasTotal;
   STATE.totalPrice = total;
+
+  // Build extras summary label (e.g. "מזוודה ×2, עלייה מועדפת ×1")
+  const hebrewNames = { luggage: 'מזוודה', priority: 'עלייה מועדפת', drinks: 'משקאות' };
+  const extrasSummary = Object.keys(EXTRA_PRICES).map(k => {
+    const count = perPax.filter(p => p[k]).length;
+    if (!count) return null;
+    return count === totalPassengers ? hebrewNames[k] : `${hebrewNames[k]} ×${count}`;
+  }).filter(Boolean).join(', ') || 'ללא';
 
   // Populate summary display
   const sets = {
     '#sum-flight':    STATE.selectedFlight || 'VA101',
     '#sum-seats':     STATE.selectedSeats.join(', ') || '—',
     '#sum-passengers': totalPassengers,
-    '#sum-extras':    Object.entries(STATE.extras).filter(([,v])=>v).map(([k])=>k).join(', ') || 'None',
+    '#sum-extras':    extrasSummary,
     '#sum-base':      formatPrice(basePrice * totalPassengers),
-    '#sum-extras-cost': formatPrice(extrasTotal * totalPassengers),
+    '#sum-extras-cost': formatPrice(extrasTotal),
     '#sum-total':     formatPrice(total)
   };
   Object.entries(sets).forEach(([sel, val]) => {
@@ -591,7 +678,16 @@ function initConfirmationPage() {
     '#conf-email':      STATE.contact.email || '—',
     '#conf-total':      formatPrice(STATE.totalPrice || 0),
     '#conf-date':       STATE.departure || '—',
-    '#conf-extras':     Object.entries(STATE.extras).filter(([,v])=>v).map(([k])=>k).join(', ') || 'None'
+    '#conf-extras':     (() => {
+      const tp = STATE.passengers.adults + STATE.passengers.teens + STATE.passengers.children || 1;
+      const pp = Array.isArray(STATE.extrasPerPassenger) && STATE.extrasPerPassenger.length === tp
+        ? STATE.extrasPerPassenger : Array.from({ length: tp }, () => ({ ...STATE.extras }));
+      const names = { luggage: 'מזוודה', priority: 'עלייה מועדפת', drinks: 'משקאות' };
+      return Object.keys(EXTRA_PRICES).map(k => {
+        const c = pp.filter(p => p[k]).length;
+        return c ? (c === tp ? names[k] : `${names[k]} ×${c}`) : null;
+      }).filter(Boolean).join(', ') || 'ללא';
+    })()
   };
   Object.entries(sets).forEach(([sel, val]) => {
     const el = $(sel);
@@ -607,7 +703,13 @@ function initConfirmationPage() {
   if (saveBtn) {
     saveBtn.addEventListener('click', () => {
       const hebrewExtrasMap = { luggage: 'מזוודה', priority: 'עלייה מועדפת', drinks: 'משקאות' };
-      const activeExtrasHe = Object.entries(STATE.extras||{}).filter(([,v])=>v).map(([k])=>hebrewExtrasMap[k]||k);
+      const tp2 = STATE.passengers.adults + STATE.passengers.teens + STATE.passengers.children || 1;
+      const pp2 = Array.isArray(STATE.extrasPerPassenger) && STATE.extrasPerPassenger.length === tp2
+        ? STATE.extrasPerPassenger : Array.from({ length: tp2 }, () => ({ ...STATE.extras }));
+      const activeExtrasHe = Object.keys(hebrewExtrasMap).map(k => {
+        const c = pp2.filter(p => p[k]).length;
+        return c ? (c === tp2 ? hebrewExtrasMap[k] : `${hebrewExtrasMap[k]} ×${c}`) : null;
+      }).filter(Boolean);
       const content = [
         'VolAir Airlines — אישור הזמנה',
         '═══════════════════════════════════════',
@@ -688,4 +790,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initSummaryPage();
   initPaymentPage();
   initConfirmationPage();
+  window.i18n?.applyLang(window._volairLang || 'he');
 });

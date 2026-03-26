@@ -70,7 +70,7 @@
   </style>
 </head>
 <body>
-  <a href="#main-content" class="skip-link">דלג לתוכן הראשי</a>
+  <a href="#main-content" class="skip-link" data-i18n="skip.link">דלג לתוכן הראשי</a>
 
   <nav class="navbar" role="navigation" aria-label="ניווט ראשי">
     <div class="nav-inner">
@@ -82,12 +82,17 @@
         <span></span><span></span><span></span>
       </button>
       <ul class="nav-links" role="list">
-        <li><a href="index.html">בית</a></li>
-        <li><a href="flights.html" class="btn-nav">הזמן טיסה</a></li>
-        <li><a href="crew.html">הצוות שלנו</a></li>
-        <li><a href="fleet.html">הצי שלנו</a></li>
-        <li><a href="about.html">אודות</a></li>
+        <li><a href="index.html" data-i18n="nav.home">בית</a></li>
+        <li><a href="flights.html" class="btn-nav" data-i18n="nav.book">הזמן טיסה</a></li>
+        <li><a href="crew.html" data-i18n="nav.crew">הצוות שלנו</a></li>
+        <li><a href="fleet.html" data-i18n="nav.fleet">הצי שלנו</a></li>
+        <li><a href="about.html" data-i18n="nav.about">אודות</a></li>
       </ul>
+      <div class="lang-switcher" role="group" aria-label="שינוי שפה">
+        <button class="lang-btn active" data-lang="he" onclick="window.i18n?.applyLang('he')">עב</button>
+        <button class="lang-btn" data-lang="en" onclick="window.i18n?.applyLang('en')">EN</button>
+        <button class="lang-btn" data-lang="fr" onclick="window.i18n?.applyLang('fr')">FR</button>
+      </div>
     </div>
   </nav>
 
@@ -194,36 +199,37 @@
           <p>תעופה מודרנית ומשתלמת המחברת אתכם לערים היפות ביותר באירופה. מטיסים גבוה יותר מאז 2010.</p>
         </div>
         <div class="footer-col">
-          <h5>הזמנה</h5>
+          <h5 data-i18n="footer.booking">הזמנה</h5>
           <ul>
             <li><a href="flights.html">חיפוש טיסות</a></li>
             <li><a href="manage.html" aria-current="page">ניהול הזמנה</a></li>
           </ul>
         </div>
         <div class="footer-col">
-          <h5>החברה</h5>
+          <h5 data-i18n="footer.company">החברה</h5>
           <ul>
             <li><a href="about.html">אודות</a></li>
             <li><a href="crew.html">הצוות שלנו</a></li>
             <li><a href="fleet.html">הצי שלנו</a></li>
-            <li><a href="careers.html">קריירה</a></li>
+            <li><a href="careers.html" data-i18n="footer.careers">קריירה</a></li>
           </ul>
         </div>
         <div class="footer-col">
-          <h5>תמיכה</h5>
+          <h5 data-i18n="footer.support">תמיכה</h5>
           <ul>
-            <li><a href="help.html">מרכז עזרה</a></li>
-            <li><a href="contact.html">צור קשר</a></li>
+            <li><a href="help.html" data-i18n="footer.helpCenter">מרכז עזרה</a></li>
+            <li><a href="contact.html" data-i18n="footer.contact">צור קשר</a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
-        <span>&copy; 2025 VolAir Airlines. כל הזכויות שמורות.</span>
-        <span>עוצב באהבה ✦ תל אביב</span>
+        <span data-i18n="footer.copyright">&copy; 2026 VolAir Airlines. כל הזכויות שמורות.</span>
+        <span data-i18n="footer.tagline">עוצב באהבה ✦ תל אביב</span>
       </div>
     </div>
   </footer>
 
+  <script src="js/i18n.js"></script>
   <script src="js/app.js"></script>
   <script>
     const DEST_NAMES = { BCN: 'ברצלונה', MAD: 'מדריד', AMS: 'אמסטרדם', LHR: 'לונדון', CDG: 'פריז', FCO: 'רומא' };
