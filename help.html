@@ -475,31 +475,8 @@
       });
     });
 
-    // ─── Mini Chat ───
-    const RESPONSES = {
-      'ביטול': 'ניתן לבטל טיסה עד 2 שעות לפני ההמראה דרך <a href="manage.html" data-i18n="footer.manageBooking">ניהול הזמנה</a>.\nהחזר מלא עד 7 ימים לפני, 50% עד 48 שעות, ללא החזר פחות מ-48 שעות.',
-      'החזר': 'ההחזר הכספי מועבר תוך 5–10 ימי עסקים לאמצעי התשלום המקורי.\nתקבלו אימייל אישור עם מספר אסמכתה.',
-      'כבוד': 'כבודת יד עד 10 ק"ג כלולה בחינם.\nכבודה למטען (20 ק"ג) — €35.\nכבודה עודפת — €12 לק"ג.',
-      'מזוודה': 'כבודת יד עד 10 ק"ג כלולה בחינם.\nכבודה למטען (20 ק"ג) — €35.\nכבודה עודפת — €12 לק"ג.',
-      'צ\'ק': 'צ\'ק-אין מקוון נפתח 48 שעות לפני ונסגר 3 שעות לפני ההמראה.\nנכנסים ל<a href="manage.html" data-i18n="footer.manageBooking">ניהול הזמנה</a> ← "צ\'ק-אין מקוון".',
-      'עיכוב': 'בעיכוב מעל 3 שעות — זכאים לפיצוי לפי תקנות האיחוד האירופי.\nבעיכוב מעל 5 שעות — ניתן לבטל ולקבל החזר מלא.',
-      'מושב': 'ניתן לשנות מושב עד 24 שעות לפני ההמראה ללא עלות.\nנכנסים ל<a href="manage.html" data-i18n="footer.manageBooking">ניהול הזמנה</a> ← "שינוי מושב".',
-      'שינוי תאריך': 'שינוי תאריך אפשרי עד 48 שעות לפני ב-€25 לנוסע.\nנכנסים ל<a href="manage.html" data-i18n="footer.manageBooking">ניהול הזמנה</a>.',
-      'תאריך': 'שינוי תאריך אפשרי עד 48 שעות לפני ב-€25 לנוסע.\nנכנסים ל<a href="manage.html" data-i18n="footer.manageBooking">ניהול הזמנה</a>.',
-      'חיות': 'חיות קטנות עד 8 ק"ג מותרות בקבין ב-€50.\nחיות גדולות בתא מטען ב-€80.\nיש לדווח בעת ההזמנה.',
-      'ויזה': 'אזרחי ישראל פטורים מויזה לרוב המדינות האירופיות.\nמומלץ לבדוק בלינק לאתר הרשמי של יעד הנסיעה שלכם.',
-      'דרכון': 'הדרכון צריך להיות בתוקף לפחות 6 חודשים לאחר תאריך החזרה.',
-      'ילד': 'ילדים (2–12) ותינוקות (עד 2) ניתן להוסיף בעת ההזמנה בדף חיפוש הטיסות.',
-      'מחיר': 'מחירי הטיסות שלנו: ברצלונה €120, מדריד €95, אמסטרדם €145. עוד מסלולים ב<a href="flights.html">הזמן טיסה</a>.',
-    };
-
-    function getBotReply(text) {
-      const lower = text.toLowerCase();
-      for (const [key, reply] of Object.entries(RESPONSES)) {
-        if (lower.includes(key.toLowerCase())) return reply;
-      }
-      return `תודה על השאלה! לשאלות מורכבות יותר אנא פנו אלינו דרך <a href="contact.html">טופס יצירת הקשר</a> ונחזור אליכם תוך שעה.`;
-    }
+    // ─── AI Chat ───
+    const chatHistory = [];
 
     function addMsg(text, type) {
       const msgs = document.getElementById('chat-messages');
@@ -519,16 +496,29 @@
       return div;
     }
 
-    function sendMsg() {
+    async function sendMsg() {
       const input = document.getElementById('chat-input');
       const text = input.value.trim(); if (!text) return;
       addMsg(text, 'user'); input.value = '';
       document.getElementById('chat-quick').style.display = 'none';
       const typing = showTyping();
-      setTimeout(() => {
+
+      try {
+        const res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: text, history: chatHistory })
+        });
+        const data = await res.json();
+        const reply = data.reply || 'לצערי אין לי יכולת לענות לך על שאלה זו, אבל אתה יכול לפנות למייל VolAirAirlines@Gmail.com ואנחנו נענה לך בהקדם';
         typing.remove();
-        addMsg(getBotReply(text), 'bot');
-      }, 900 + Math.random() * 400);
+        addMsg(reply, 'bot');
+        chatHistory.push({ role: 'user', text });
+        chatHistory.push({ role: 'model', text: reply });
+      } catch {
+        typing.remove();
+        addMsg('לצערי אין לי יכולת לענות לך על שאלה זו, אבל אתה יכול לפנות למייל VolAirAirlines@Gmail.com ואנחנו נענה לך בהקדם', 'bot');
+      }
     }
 
     function quickAsk(q) {
